@@ -1,0 +1,15 @@
+.nav {
+    grid-area: n;
+    background-color: burlywood;
+    /*background: linear-gradient(#9A5044, #E8D9A9) fixed;*/
+    padding: 20px;
+}
+
+.item a {
+    text-decoration: none;
+    color:whitesmoke;
+}
+.item a.active{
+    text-decoration: none;
+    color: gold;
+}
