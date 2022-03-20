@@ -10,9 +10,10 @@ import {StateType} from "./redux/state";
 
 type AppPropsType = {
     state: StateType
+    addPost: (text:string)=>void
 }
 
-function App({state} : AppPropsType) {
+function App({state, ...rest} : AppPropsType) {
     return (
         <BrowserRouter>
 
@@ -21,7 +22,7 @@ function App({state} : AppPropsType) {
             <Navbar sidebar={state.sidebar}/>
             <div className='app-wrapper-content'>
                 <Routes>
-            <Route path={"/Profile"} element={<Profile profilePage={state.profilePage}/>}/>
+            <Route path={"/Profile"} element={<Profile profilePage={state.profilePage} addPost={rest.addPost}/>}/>
             <Route path={"/Dialogs"} element={<Dialogs dialogsPage={state.dialogsPage}/>}/>
                 </Routes>
             </div>

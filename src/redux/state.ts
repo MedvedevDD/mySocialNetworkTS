@@ -32,6 +32,7 @@ export type StateType = {
 }
 
 export let state: StateType = {
+
     profilePage: {
         posts: [
             {id: 1, message: "Hello", likeCounts: 10},
@@ -60,4 +61,16 @@ export let state: StateType = {
             {id: 4, name: 'Писюн'}
         ]
     }
+
+}
+
+
+export let addPost = (newPostmessage: string)=> {
+    debugger
+    const newPost: PostType = {
+        id: new Date().getTime(),
+        message: newPostmessage,
+        likeCounts: 0
+    }
+    state.profilePage.posts.push(newPost)
 }
