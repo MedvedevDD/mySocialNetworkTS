@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../rerender";
+
 export type DialogType = {
     id: number
     name: string
@@ -12,6 +14,7 @@ export type PostType = {
     likeCounts: number
 }
 export type ProfilePageType = {
+    newPostText: string
     posts: Array<PostType>
 }
 export type DialogsPageType = {
@@ -34,6 +37,7 @@ export type StateType = {
 export let state: StateType = {
 
     profilePage: {
+        newPostText: "",
         posts: [
             {id: 1, message: "Hello", likeCounts: 10},
             {id: 2, message: "How are you", likeCounts: 15}
@@ -63,14 +67,31 @@ export let state: StateType = {
     }
 
 }
+//window.state = state
 
+export let newPostTextChange = (newText:string) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireTree(state)
+}
 
-export let addPost = (newPostmessage: string)=> {
-    debugger
+export let addPost = ()=> {
+
     const newPost: PostType = {
         id: new Date().getTime(),
-        message: newPostmessage,
+        message: state.profilePage.newPostText,
         likeCounts: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ""
+    rerenderEntireTree(state)
+}
+export let addMessage = (message: string)=> {
+
+    const newMessage: MessageType = {
+        id: new Date().getTime(),
+        message: message,
+        }
+    state.dialogsPage.messages.push(newMessage)
+    rerenderEntireTree(state)
+
 }
