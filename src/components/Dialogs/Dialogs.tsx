@@ -11,11 +11,11 @@ type DialogsPropsType = {
 
 }
 
-const Dialogs = ({dialogsPage,  ...rest}: DialogsPropsType) => {
+const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
 
 
-    const dialogsElement = dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
-    const messageElement = dialogsPage.messages.map(m => <Message message={m.message}/>)
+    const dialogsElement = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
+    const messageElement = dialogsPage.messages.map(m => <Message key={m.id} message={m.message}/>)
 
     //let newMessageRef = React.createRef<HTMLTextAreaElement>()
 
@@ -39,7 +39,8 @@ const Dialogs = ({dialogsPage,  ...rest}: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 {messageElement}
-                <textarea onChange={onNewMessageTextHandlder} value={newMessage} placeholder={"TypeIn your message here"}/>
+                <textarea onChange={onNewMessageTextHandlder} value={newMessage}
+                          placeholder={"TypeIn your message here"}/>
                 <button onClick={addNewMessage}>Add Message</button>
             </div>
         </div>

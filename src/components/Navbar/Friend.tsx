@@ -6,11 +6,11 @@ type MyFriendPropsType = {
     name: string
 }
 export const MyFriend = ({id, name}: MyFriendPropsType) => {
-    let path:string = "/Friends/" + id
+    let path: string = "/Friends/" + id
     return (
         <div className={s.item}>
             <NavLink to={path}
-            className={({isActive})=>(isActive ? s.active : "")}>{name}</NavLink>
+                     className={({isActive}) => (isActive ? s.active : "")}>{name}</NavLink>
         </div>
     )
 }

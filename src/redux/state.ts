@@ -1,5 +1,3 @@
-import {rerenderEntireTree} from "../rerender";
-
 export type DialogType = {
     id: number
     name: string
@@ -33,65 +31,85 @@ export type StateType = {
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
-
-export let state: StateType = {
-
-    profilePage: {
-        newPostText: "",
-        posts: [
-            {id: 1, message: "Hello", likeCounts: 10},
-            {id: 2, message: "How are you", likeCounts: 15}
-        ]
-    },
-    dialogsPage: {
-        messages: [
-            {id: 1, message: "Hello"},
-            {id: 2, message: "Hi"},
-            {id: 3, message: "Aloha"}
-        ],
-        dialogs: [
-            {id: 1, name: "Dimych"},
-            {id: 2, name: "Tatiana"},
-            {id: 3, name: "Veronika"},
-            {id: 4, name: "Sergey"},
-            {id: 5, name: "Sveta"}
-        ]
-    },
-    sidebar: {
-        myFriends: [
-            {id: 1, name: 'Dimon'},
-            {id: 2, name: 'Irishka'},
-            {id: 3, name: 'Svetka'},
-            {id: 4, name: 'Писюн'}
-        ]
-    }
-
-}
-//window.state = state
-
-export let newPostTextChange = (newText:string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireTree(state)
+export type StoreType = {
+    _state: StateType
+    getState: () => StateType
+    newPostTextChange: (newText: string) => void
+    addPost: () => void
+    addMessage: (message: string) => void
+    onChange: () => void
+    subscribe: (callback: () => void) => void
 }
 
-export let addPost = ()=> {
+export let store: StoreType = {
+    _state: {
 
-    const newPost: PostType = {
-        id: new Date().getTime(),
-        message: state.profilePage.newPostText,
-        likeCounts: 0
-    }
-    state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText = ""
-    rerenderEntireTree(state)
-}
-export let addMessage = (message: string)=> {
-
-    const newMessage: MessageType = {
-        id: new Date().getTime(),
-        message: message,
+        profilePage: {
+            newPostText: "",
+            posts: [
+                {id: 1, message: "Hello", likeCounts: 10},
+                {id: 2, message: "How are you", likeCounts: 15}
+            ]
+        },
+        dialogsPage: {
+            messages: [
+                {id: 1, message: "Hello"},
+                {id: 2, message: "Hi"},
+                {id: 3, message: "Aloha"}
+            ],
+            dialogs: [
+                {id: 1, name: "Dimych"},
+                {id: 2, name: "Tatiana"},
+                {id: 3, name: "Veronika"},
+                {id: 4, name: "Sergey"},
+                {id: 5, name: "Sveta"}
+            ]
+        },
+        sidebar: {
+            myFriends: [
+                {id: 1, name: 'Dimon'},
+                {id: 2, name: 'Irishka'},
+                {id: 3, name: 'Svetka'},
+                {id: 4, name: 'Писюн'}
+            ]
         }
-    state.dialogsPage.messages.push(newMessage)
-    rerenderEntireTree(state)
 
+    },
+    getState() {
+        return this._state
+    },
+    onChange() {
+        console.log("Hey")
+    },
+    newPostTextChange(newText: string) {
+        this._state.profilePage.newPostText = newText
+        this.onChange()
+    },
+    addPost() {
+        const newPost: PostType = {
+            id: new Date().getTime(),
+            message: this._state.profilePage.newPostText,
+            likeCounts: 0
+        }
+        if (this._state.profilePage.newPostText.length != 0) {
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ""
+        }
+        this.onChange()
+    },
+    addMessage(message: string) {
+        const newMessage: MessageType = {
+            id: new Date().getTime(),
+            message: message,
+        }
+        this._state.dialogsPage.messages.push(newMessage)
+        this.onChange()
+    },
+    subscribe(callback) {
+        this.onChange = callback
+    }
 }
+
+// @ts-ignore
+window.store = store
+

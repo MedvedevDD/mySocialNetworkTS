@@ -7,20 +7,21 @@ import {ProfilePageType} from "../../redux/state";
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
-    addPost: ()=> void
-    onTextChangeHandler: (text:string)=>void
+    addPost: () => void
+    onTextChangeHandler: (text: string) => void
 }
 
-function Profile({profilePage, ...rest}:ProfilePropsType) {
- return (
-     <div >
-         <ProfileInfo/>
-         <MyPosts posts={profilePage.posts}
-                  message={profilePage.newPostText}
-                  addPost={rest.addPost}
-                  onTextChangeHandler={rest.onTextChangeHandler}
-          />
-     </div>
- )
+function Profile({profilePage, ...rest}: ProfilePropsType) {
+    return (
+        <div>
+            <ProfileInfo/>
+            <MyPosts posts={profilePage.posts}
+                     message={profilePage.newPostText}
+                     addPost={rest.addPost}
+                     onTextChangeHandler={rest.onTextChangeHandler}
+            />
+        </div>
+    )
 }
+
 export default Profile;

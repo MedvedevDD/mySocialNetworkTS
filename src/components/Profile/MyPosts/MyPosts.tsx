@@ -20,13 +20,14 @@ function MyPosts({posts, ...rest}: MyPostsPropsType) {
         // //         rest.addPost(text)
         // //     }
         // if (newPostElement.current) {
-            rest.addPost()
-            // newPostElement.current.value = ""
+        rest.addPost()
+        // newPostElement.current.value = ""
         // }
     }
     const onNewTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value
         rest.onTextChangeHandler(newText)
+
     }
     return (
         <div className={s.postsBlock}>

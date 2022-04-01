@@ -9,7 +9,7 @@ export type MyFriendsPropsType = {
 
 export function MyFriends({myFriends}: MyFriendsPropsType) {
 
-    let myFriendElement = myFriends.map((f: FriendType) => <MyFriend name={f.name} id={f.id}/>)
+    let myFriendElement = myFriends.map((f: FriendType) => <MyFriend key={f.id} name={f.name} id={f.id}/>)
 
     return (
         <div>
