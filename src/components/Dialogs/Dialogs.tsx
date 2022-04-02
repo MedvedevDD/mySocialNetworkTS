@@ -2,12 +2,12 @@ import React, {ChangeEvent, useState} from 'react';
 import s from "./Dialogs.module.css";
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from "./Message/Message";
-import {DialogsPageType} from "../../redux/state";
+import {ActionTypes, addMessageAC, DialogsPageType} from "../../redux/state";
 
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    addMessage: (newMessage: string) => void
+    dispatch: (action: ActionTypes) => void
 
 }
 
@@ -25,11 +25,7 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
         setNewMessage(e.currentTarget.value)
     }
     const addNewMessage = () => {
-        // if (newMessageRef.current) {
-        //     addMessage(newMessageRef.current.value)
-        //     newMessageRef.current.value = ""
-        // }
-        rest.addMessage(newMessage)
+        rest.dispatch(addMessageAC(newMessage))
         setNewMessage("")
     }
     return (

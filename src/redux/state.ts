@@ -34,12 +34,12 @@ export type StateType = {
 export type StoreType = {
     _state: StateType
     getState: () => StateType
-    newPostTextChange: (newText: string) => void
-    addPost: () => void
-    addMessage: (message: string) => void
     onChange: () => void
     subscribe: (callback: () => void) => void
+    dispatch: (action: ActionTypes) => void
 }
+
+export type ActionTypes = ReturnType<typeof addPostAC>|ReturnType<typeof newPostTextChangeAC>|ReturnType<typeof addMessageAC>
 
 export let store: StoreType = {
     _state: {
@@ -78,37 +78,41 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
+    subscribe(callback) {
+        this.onChange = callback
+    },
     onChange() {
         console.log("Hey")
     },
-    newPostTextChange(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this.onChange()
-    },
-    addPost() {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likeCounts: 0
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            const newPost: PostType = {
+                id: new Date().getTime(),
+                message: this._state.profilePage.newPostText,
+                likeCounts: 0
+            }
+            if (this._state.profilePage.newPostText.length != 0) {
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ""
+            }
+            this.onChange()
+        } else if (action.type === "NEW-POST-TEXT-CHANGE") {
+            this._state.profilePage.newPostText = action.newText
+            this.onChange()
+        } else if (action.type === "ADD-MESSAGE") {
+            const newMessage: MessageType = {
+                id: new Date().getTime(),
+                message: action.message,
+            }
+            this._state.dialogsPage.messages.push(newMessage)
+            this.onChange()
         }
-        if (this._state.profilePage.newPostText.length != 0) {
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-        }
-        this.onChange()
-    },
-    addMessage(message: string) {
-        const newMessage: MessageType = {
-            id: new Date().getTime(),
-            message: message,
-        }
-        this._state.dialogsPage.messages.push(newMessage)
-        this.onChange()
-    },
-    subscribe(callback) {
-        this.onChange = callback
     }
 }
+
+export const addPostAC = () =>({type: "ADD-POST"} as const)
+export const newPostTextChangeAC = (newText:string) =>({type: "NEW-POST-TEXT-CHANGE", newText:newText} as const)
+export const addMessageAC = (message:string) =>({type: "ADD-MESSAGE", message:message} as const)
 
 // @ts-ignore
 window.store = store

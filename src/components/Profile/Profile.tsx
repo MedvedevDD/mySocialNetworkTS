@@ -2,13 +2,12 @@ import React from "react";
 import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../redux/state";
+import {ActionTypes, ProfilePageType} from "../../redux/state";
 
 
 type ProfilePropsType = {
     profilePage: ProfilePageType
-    addPost: () => void
-    onTextChangeHandler: (text: string) => void
+    dispatch: (action:ActionTypes)=>void
 }
 
 function Profile({profilePage, ...rest}: ProfilePropsType) {
@@ -17,8 +16,7 @@ function Profile({profilePage, ...rest}: ProfilePropsType) {
             <ProfileInfo/>
             <MyPosts posts={profilePage.posts}
                      message={profilePage.newPostText}
-                     addPost={rest.addPost}
-                     onTextChangeHandler={rest.onTextChangeHandler}
+                     dispatch={rest.dispatch}
             />
         </div>
     )
