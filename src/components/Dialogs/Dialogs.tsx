@@ -1,8 +1,10 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from "./Dialogs.module.css";
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from "./Message/Message";
-import {ActionTypes, addMessageAC, DialogsPageType} from "../../redux/state";
+import {ActionTypes, DialogsPageType} from "../../redux/state";
+import {addMessageAC} from '../../redux/dialogs-reducer';
+import {addPostAC} from "../../redux/profile-reducer";
 
 
 type DialogsPropsType = {
@@ -28,6 +30,11 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
         rest.dispatch(addMessageAC(newMessage))
         setNewMessage("")
     }
+    const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter") {
+            addNewMessage()
+        }
+    }
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -35,7 +42,7 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 {messageElement}
-                <textarea onChange={onNewMessageTextHandlder} value={newMessage}
+                <textarea onKeyPress={onEnterKeyPress} onChange={onNewMessageTextHandlder} value={newMessage}
                           placeholder={"TypeIn your message here"}/>
                 <button onClick={addNewMessage}>Add Message</button>
             </div>

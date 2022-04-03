@@ -1,7 +1,8 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ActionTypes, addPostAC, newPostTextChangeAC, PostType} from "../../../redux/state";
+import {ActionTypes, PostType} from "../../../redux/state";
+import {addPostAC, newPostTextChangeAC} from "../../../redux/profile-reducer";
 
 
 type MyPostsPropsType = {
@@ -18,7 +19,11 @@ function MyPosts({posts, ...rest}: MyPostsPropsType) {
     const onNewTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value
         rest.dispatch(newPostTextChangeAC(newText))
-
+    }
+    const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter") {
+            rest.dispatch(addPostAC())
+        }
     }
     return (
         <div className={s.postsBlock}>
@@ -26,7 +31,7 @@ function MyPosts({posts, ...rest}: MyPostsPropsType) {
                 <h3>My post</h3>
             </div>
             <div>
-                <div><textarea onChange={onNewTextChangeHandler} value={rest.message}
+                <div><textarea onKeyPress={onEnterKeyPress} onChange={onNewTextChangeHandler} value={rest.message}
                                placeholder="введите ваше сообщение"></textarea></div>
                 <div>
                     <button onClick={addPost}>Add Post</button>
