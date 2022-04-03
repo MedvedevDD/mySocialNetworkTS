@@ -1,5 +1,5 @@
-import {FriendType} from "../../redux/state";
 import {MyFriend} from "./Friend";
+import {FriendType} from "../../redux/redux-store";
 
 
 export type MyFriendsPropsType = {

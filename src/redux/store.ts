@@ -1,55 +1,15 @@
-import profileReducer, {addPostAC, newPostTextChangeAC} from "./profile-reducer";
-import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
-import sidebarReducer from "./sidebar-reducer";
+/*import {ActionTypes, StateType} from "./redux-store";
 
 
-export type DialogType = {
-    id: number
-    name: string
-}
-export type MessageType = {
-    id: number
-    message: string
-}
-export type PostType = {
-    id: number
-    message: string
-    likeCounts: number
-}
-export type ProfilePageType = {
-    newPostText: string
-    posts: Array<PostType>
-}
-export type DialogsPageType = {
-    messages: Array<MessageType>
-    dialogs: Array<DialogType>
-}
-export type FriendType = {
-    id: number
-    name: string
-}
-export type SidebarType = {
-    myFriends: Array<FriendType>
-}
-export type StateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-    sidebar: SidebarType
-}
 export type StoreType = {
     _state: StateType
     getState: () => StateType
     onChange: () => void
     subscribe: (callback: () => void) => void
     dispatch: (action: ActionTypes) => void
-}
+}*/
 
-export type ActionTypes =
-    ReturnType<typeof addPostAC>
-    | ReturnType<typeof newPostTextChangeAC>
-    | ReturnType<typeof addMessageAC>
-
-export let store: StoreType = {
+/*let store: StoreType = {
     _state: {
 
         profilePage: {
@@ -98,9 +58,9 @@ export let store: StoreType = {
         sidebarReducer(this._state.sidebar, action)
         this.onChange()
     }
-}
-
+}*/
+export default "1"
 
 // @ts-ignore
-window.store = store
+//window.store = store
 
