@@ -8,21 +8,22 @@ import {ActionTypes, PostType} from "../../../redux/redux-store";
 type MyPostsPropsType = {
     posts: Array<PostType>
     message: string
-    dispatch: (action: ActionTypes) => void
+    addPost: () => void
+    onNewTextChange: (newText:string)=>void
 }
 
 function MyPosts({posts, ...rest}: MyPostsPropsType) {
     const postElements = posts.map(p => <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>)
     const addPost = () => {
-        rest.dispatch(addPostAC())
+        rest.addPost()
     }
     const onNewTextChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newText = e.currentTarget.value
-        rest.dispatch(newPostTextChangeAC(newText))
+        rest.onNewTextChange(newText)
     }
     const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
-            rest.dispatch(addPostAC())
+            rest.addPost()
         }
     }
     return (
