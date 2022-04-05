@@ -1,15 +1,11 @@
 import {MyFriend} from "./Friend";
-import {FriendType} from "../../redux/redux-store";
+import {FriendType} from "../../redux/sidebar-reducer";
+import {MyFriendsPropsType} from "./MyFriendsContainer";
 
 
-export type MyFriendsPropsType = {
-    myFriends: Array<FriendType>
-}
+export function MyFriends(props: MyFriendsPropsType) {
 
-
-export function MyFriends({myFriends}: MyFriendsPropsType) {
-
-    let myFriendElement = myFriends.map((f: FriendType) => <MyFriend key={f.id} name={f.name} id={f.id}/>)
+    let myFriendElement = props.myFriends.map((f: FriendType) => <MyFriend key={f.id} name={f.name} id={f.id}/>)
 
     return (
         <div>

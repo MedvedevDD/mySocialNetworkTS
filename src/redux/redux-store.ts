@@ -3,42 +3,42 @@ import profileReducer, {addPostAC, newPostTextChangeAC} from "./profile-reducer"
 import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer
 })
-export type AppRootStateType = ReturnType<typeof reducers>
+export type AppRootStateType = ReturnType<typeof rootReducer>
 
-let store = createStore(reducers)
+let store = createStore(rootReducer)
 
 export default store;
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
-export type PostType = {
+type PostType = {
     id: number
     message: string
     likeCounts: number
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     newPostText: string
     posts: Array<PostType>
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     messages: Array<MessageType>
     dialogs: Array<DialogType>
 }
-export type FriendType = {
+type FriendType = {
     id: number
     name: string
 }
-export type SidebarType = {
+type SidebarType = {
     myFriends: Array<FriendType>
 }
 export type StateType = {

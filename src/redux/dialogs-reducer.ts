@@ -1,8 +1,21 @@
-import {ActionTypes, DialogsPageType, MessageType} from "./redux-store";
+import {ActionTypes} from "./redux-store";
 
 const ADD_MESSAGE = "ADD-MESSAGE"
 
-const initialState = {
+export type DialogType = {
+    id: number
+    name: string
+}
+export type MessageType = {
+    id: number
+    message: string
+}
+export type DialogsPageType = {
+    messages: Array<MessageType>
+    dialogs: Array<DialogType>
+}
+
+const initialState: DialogsPageType = {
     messages: [
         {id: 1, message: "Hello"},
         {id: 2, message: "Hi"},
@@ -17,8 +30,8 @@ const initialState = {
     ]
 }
 
-const dialogsReducer = (state:DialogsPageType = initialState, action:ActionTypes):DialogsPageType => {
-    switch (action.type){
+const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTypes): DialogsPageType => {
+    switch (action.type) {
         case ADD_MESSAGE:
             const newMessage: MessageType = {
                 id: new Date().getTime(),
@@ -31,5 +44,5 @@ const dialogsReducer = (state:DialogsPageType = initialState, action:ActionTypes
     }
 
 }
-export const addMessageAC = (message:string) =>({type: ADD_MESSAGE, message:message} as const)
+export const addMessageAC = (message: string) => ({type: ADD_MESSAGE, message: message} as const)
 export default dialogsReducer;

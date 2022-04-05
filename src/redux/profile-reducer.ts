@@ -1,14 +1,24 @@
-import {ActionTypes, PostType, ProfilePageType} from "./redux-store";
+import {ActionTypes} from "./redux-store";
 
 const ADD_POST = "ADD-POST"
 const NEW_POST_TEXT_CHANGE = "NEW-POST-TEXT-CHANGE"
 
-const initialState = {
+export type PostType = {
+    id: number
+    message: string
+    likeCounts: number
+}
+export type ProfilePageType = {
+    newPostText: string
+    posts: Array<PostType>
+}
+
+const initialState:ProfilePageType = {
     newPostText: "",
     posts: [
         {id: 1, message: "Hello", likeCounts: 10},
         {id: 2, message: "How are you", likeCounts: 15}
-    ]
+    ] as Array<PostType>
 }
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
@@ -23,10 +33,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 state.posts.push(newPost)
                 state.newPostText = ""
             }
-            return state;
+            return {...state};
         case NEW_POST_TEXT_CHANGE:
-            state.newPostText = action.newText
-            return state;
+            let stateCopy:ProfilePageType = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy;
         default:
             return state
     }

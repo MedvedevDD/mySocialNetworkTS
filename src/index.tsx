@@ -7,8 +7,7 @@ import {rerenderEntireTree} from "./rerender";
 
 rerenderEntireTree()
 
-store.subscribe(()=> {
-    let state = store.getState()
+store.subscribe(() => {
     rerenderEntireTree()
 })
 // If you want to start measuring performance in your app, pass a function

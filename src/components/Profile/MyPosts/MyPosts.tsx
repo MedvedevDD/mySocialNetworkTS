@@ -1,19 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {addPostAC, newPostTextChangeAC} from "../../../redux/profile-reducer";
-import {ActionTypes, PostType} from "../../../redux/redux-store";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-
-type MyPostsPropsType = {
-    posts: Array<PostType>
-    message: string
-    addPost: () => void
-    onNewTextChange: (newText:string)=>void
-}
-
-function MyPosts({posts, ...rest}: MyPostsPropsType) {
-    const postElements = posts.map(p => <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>)
+function MyPosts({profilePage, ...rest}: MyPostsPropsType) {
+    const postElements = profilePage.posts.map(p => <Post key={p.id} message={p.message} likeCounts={p.likeCounts}/>)
     const addPost = () => {
         rest.addPost()
     }
@@ -32,7 +23,7 @@ function MyPosts({posts, ...rest}: MyPostsPropsType) {
                 <h3>My post</h3>
             </div>
             <div>
-                <div><textarea onKeyPress={onEnterKeyPress} onChange={onNewTextChangeHandler} value={rest.message}
+                <div><textarea onKeyPress={onEnterKeyPress} onChange={onNewTextChangeHandler} value={profilePage.newPostText}
                                placeholder="введите ваше сообщение"></textarea></div>
                 <div>
                     <button onClick={addPost}>Add Post</button>
