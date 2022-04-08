@@ -13,7 +13,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 let store = createStore(rootReducer)
 
 export default store;
-type DialogType = {
+/*type DialogType = {
     id: number
     name: string
 }
@@ -41,11 +41,11 @@ type FriendType = {
 type SidebarType = {
     myFriends: Array<FriendType>
 }
-export type StateType = {
+type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
-}
+}*/
 export type ActionTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof newPostTextChangeAC>

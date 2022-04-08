@@ -37,8 +37,9 @@ const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTyp
                 id: new Date().getTime(),
                 message: action.message,
             }
-            state.messages.push(newMessage)
-            return state;
+            let stateCopy = {...state}
+            stateCopy.messages = [...state.messages, newMessage]
+            return stateCopy;
         default:
             return state
     }

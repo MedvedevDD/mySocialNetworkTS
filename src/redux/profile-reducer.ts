@@ -13,7 +13,7 @@ export type ProfilePageType = {
     posts: Array<PostType>
 }
 
-const initialState:ProfilePageType = {
+const initialState: ProfilePageType = {
     newPostText: "",
     posts: [
         {id: 1, message: "Hello", likeCounts: 10},
@@ -29,13 +29,14 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 message: state.newPostText,
                 likeCounts: 0
             }
+            let statecopy = {...state}
             if (state.newPostText.length !== 0) {
-                state.posts.push(newPost)
-                state.newPostText = ""
+                statecopy.posts = [...state.posts, newPost]
+                statecopy.newPostText = ""
             }
-            return {...state};
+            return statecopy;
         case NEW_POST_TEXT_CHANGE:
-            let stateCopy:ProfilePageType = {...state}
+            let stateCopy: ProfilePageType = {...state}
             stateCopy.newPostText = action.newText
             return stateCopy;
         default:
