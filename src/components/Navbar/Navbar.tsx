@@ -21,6 +21,11 @@ function Navbar() {
                     >Messages</NavLink>
                 </div>
                 <div className={s.item}>
+                    <NavLink to="/Users"
+                             className={({isActive}) => (isActive ? s.active : 'inactive')}
+                    >Users</NavLink>
+                </div>
+                <div className={s.item}>
                     <NavLink to="/News"
                              className={({isActive}) => (isActive ? s.active : 'inactive')}
                     >News</NavLink>

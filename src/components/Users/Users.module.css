@@ -1,0 +1,12 @@
+.photo {
+    height: 100px;
+    width: 100px;
+}
+.user {
+    display: flex;
+}
+.userdata {
+    display: flex;
+
+    padding: 20px;
+}

@@ -29,20 +29,19 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 message: state.newPostText,
                 likeCounts: 0
             }
-            let statecopy = {...state}
-            if (state.newPostText.length !== 0) {
-                statecopy.posts = [...state.posts, newPost]
-                statecopy.newPostText = ""
-            }
-            return statecopy;
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ""
+            };
         case NEW_POST_TEXT_CHANGE:
-            let stateCopy: ProfilePageType = {...state}
-            stateCopy.newPostText = action.newText
-            return stateCopy;
+            return {
+                ...state,
+                newPostText: action.newText
+            };
         default:
             return state
     }
-
 }
 export const addPostAC = () => ({type: ADD_POST} as const)
 export const newPostTextChangeAC = (newText: string) => ({type: NEW_POST_TEXT_CHANGE, newText: newText} as const)
