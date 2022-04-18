@@ -18,6 +18,7 @@
 }
 .userdata .userName {
     font-weight: bold;
+    padding: 10px;
 }
 
 .avatar {
@@ -27,7 +28,8 @@
     font-size: smaller;
     color: antiquewhite;
 }
-.location {
+.location,
+.nameModule {
     display: inline-block;
     padding: 30px;
 }

@@ -30,13 +30,13 @@ export const Users = (props: UsersPropsType) => {
             </span>
 
                 <span className={styles.userdata}>
+                    <div className={styles.nameModule}>
+                        <div className={styles.userName}>{u.name}</div>
+                        <div className={styles.status}>{u.status ? u.status : "Статус отсутствует"}</div>
+                    </div>
                     <div className={styles.location}>
-                <div className={styles.userName}>{u.name}</div>
-                <div className={styles.status}>{u.status ? u.status : "Статус отсутствует"}</div>
-                        </div>
-                    <div className={styles.location}>
-                      <div>{"u.location.country"}</div>
-                      <div>{"u.location.cityName"}</div>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.cityName"}</div>
 
                     </div>
             </span>
