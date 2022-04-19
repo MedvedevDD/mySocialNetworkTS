@@ -23,13 +23,14 @@ export const Users = (props: UsersPropsType) => {
 
             <span className={styles.avatar}>
                 <img className={styles.photo} src={u.photos.small != null ? u.photos.small : userPhoto}/>
-                <div>
-                   {(u.followed) ? <button className={styles.button} onClick={() => props.unFollow(u.id)}>UnFollow</button>
+                <div className={styles.button__element}>
+                   {(u.followed) ?
+                       <button className={styles.button} onClick={() => props.unFollow(u.id)}>UnFollow</button>
                        : <button className={styles.button} onClick={() => props.follow(u.id)}>Follow</button>}
                 </div>
             </span>
 
-                <span className={styles.userdata}>
+                <div className={styles.userdata}>
                     <div className={styles.nameModule}>
                         <div className={styles.userName}>{u.name}</div>
                         <div className={styles.status}>{u.status ? u.status : "Статус отсутствует"}</div>
@@ -37,9 +38,8 @@ export const Users = (props: UsersPropsType) => {
                     <div className={styles.location}>
                         <div>{"u.location.country"}</div>
                         <div>{"u.location.cityName"}</div>
-
                     </div>
-            </span>
+                </div>
 
             </div>
         )}
