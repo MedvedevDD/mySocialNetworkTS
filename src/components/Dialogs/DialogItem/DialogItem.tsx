@@ -11,7 +11,9 @@ type DialogItemPropsType = {
 export function DialogItem(props:DialogItemPropsType) {
     return (
         <div className={s.dialog }>
-        <NavLink to={"/Dialogs/" + props.id} className={({ isActive }) => (isActive ? s.active : 'inactive')}>{props.name}</NavLink>
+        <NavLink to={"/Dialogs/"+ props.id } className={({ isActive }) => (isActive ? s.active : 'inactive')}>{props.name}</NavLink>
     </div>
 )
 }
+//({ isActive }) => (isActive ? s.active : 'inactive')
+//+ props.id
