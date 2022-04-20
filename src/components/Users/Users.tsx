@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent} from "react"
+import React, {ChangeEvent, FormEvent, KeyboardEvent, MouseEvent} from "react"
 
 import {UsersPropsType} from "./UsersContainer";
 import styles from "./Users.module.css";
@@ -24,11 +24,9 @@ class Users extends React.Component<UsersPropsType> {
                 this.props.setUsers(response.data.items)
             })
     }
-    setUsersPerPage = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
+    setUsersPerPage = (e: MouseEvent<HTMLSelectElement>) => {
             this.props.setUsersPerPage(Number(e.currentTarget.value))
-            }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersPerPage}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${e.currentTarget.value}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
             })
@@ -76,10 +74,15 @@ class Users extends React.Component<UsersPropsType> {
                         onClick={() => {
                             this.setCurrentPage(p)
                         }}>{p}</li>)}
-                    <input className={styles.inputUsersPerPage} type={"number"} title={"Количество на странице"}
-                           placeholder={`${this.props.usersPerPage}`}
-                           onKeyPress={(e:KeyboardEvent<HTMLInputElement>) => this.setUsersPerPage(e)}/>
+                    {/*<input className={styles.inputUsersPerPage} type={"number"} title={"Количество на странице"}*/}
+                    {/*       placeholder={`${this.props.usersPerPage}`}*/}
+                    {/*       onKeyPress={(e:KeyboardEvent<HTMLInputElement>) => this.setUsersPerPage(e)}/>*/}
                     <li className={styles.page} onClick={setNextPage}>Вперед</li>
+                    <select onClick={(e)=> this.setUsersPerPage(e)} title={"Количество на странице"}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
                 </ul>
 
             </div>
