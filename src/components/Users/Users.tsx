@@ -49,13 +49,12 @@ class Users extends React.Component<UsersPropsType> {
         const setPreviousPage = () => {
             this.props.setFirstPageOfPegination(p - 20)
         }
-        let pages = [];
-        let pageAmount = Math.ceil(this.props.amountOfUsers / this.props.usersPerPage);
-        for (let i = 1; i <= pageAmount; i++) {
-            pages.push(i)
-        }
+        // let pages = [];
+        // let pageAmount = Math.ceil(this.props.amountOfUsers / this.props.usersPerPage);
+        // for (let i = 1; i <= pageAmount; i++) {
+        //     pages.push(i)
+        // }
 
-        // @ts-ignore
         return <div>
 
 
@@ -68,7 +67,7 @@ class Users extends React.Component<UsersPropsType> {
             <div className={styles.users_pages}>
 
                 <ul>
-                    <li className={styles.page} onClick={setPreviousPage}>Назад</li>
+                    <button disabled={false} className={styles.button} onClick={setPreviousPage}>Назад</button>
                     {pageNumberArray.map(p => <li
                         className={`${styles.page} + ${this.props.currentPage === p && styles.active}`}
                         onClick={() => {
@@ -77,7 +76,7 @@ class Users extends React.Component<UsersPropsType> {
                     {/*<input className={styles.inputUsersPerPage} type={"number"} title={"Количество на странице"}*/}
                     {/*       placeholder={`${this.props.usersPerPage}`}*/}
                     {/*       onKeyPress={(e:KeyboardEvent<HTMLInputElement>) => this.setUsersPerPage(e)}/>*/}
-                    <li className={styles.page} onClick={setNextPage}>Вперед</li>
+                    <button className={styles.button} onClick={setNextPage}>Вперед</button>
                     <select onClick={(e)=> this.setUsersPerPage(e)} title={"Количество на странице"}>
                         <option value={10}>10</option>
                         <option value={50}>50</option>

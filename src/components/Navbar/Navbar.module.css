@@ -5,11 +5,20 @@
     padding: 20px;
 }
 
-.item a {
+.item {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 3px;
+    text-align: center;
+    font-weight: bold;
+
+}
+.item a{
     text-decoration: none;
+
     color:whitesmoke;
 }
 .item a.active{
-    text-decoration: none;
     color: gold;
 }

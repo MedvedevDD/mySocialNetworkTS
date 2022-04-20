@@ -5,7 +5,7 @@
 
 .dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
+    grid-template-columns: 3fr 10fr;
     padding: 25px;
     background-color: saddlebrown;
 }
@@ -20,7 +20,23 @@
 /*}*/
 .dialog {
     border: 1px solid green;
+    border-radius: 10px;
+    background-color: darkred;
+    padding: 5px;
+    margin: 3px;
 }
 .dialog a.active {
     color: gold
+}
+.messages {
+    margin-left: 50px;
+}
+.message {
+    color: blanchedalmond;
+    padding: 5px;
+    margin: 3px;
+}
+.messages textarea {
+    display: block;
+    border-radius: 10px;
 }
