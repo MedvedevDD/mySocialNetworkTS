@@ -2,7 +2,14 @@ import {combineReducers, createStore} from "redux";
 import profileReducer, {addPostAC, newPostTextChangeAC} from "./profile-reducer";
 import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import usersReducer, {followAC, setUsersAC, unFollowAC} from "./users-reducer";
+import usersReducer, {
+    followAC,
+    setAmountOfUsersAC,
+    setCurrentPageAC,
+    setFirstPageOfPeginationAC,
+    setUsersAC, setUsersPerPageAC,
+    unFollowAC
+} from "./users-reducer";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -55,6 +62,10 @@ export type ActionTypes =
     | ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setAmountOfUsersAC>
+    | ReturnType<typeof setFirstPageOfPeginationAC>
+    | ReturnType<typeof setUsersPerPageAC>
 
 //@ts-ignore
 window.store = store

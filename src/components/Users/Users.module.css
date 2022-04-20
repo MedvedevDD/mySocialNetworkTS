@@ -46,6 +46,10 @@
     /*padding: 10px;*/
 }
 
+.userdata .nameModule .userName:hover {
+    cursor: pointer;
+}
+
 .userdata .nameModule .status {
     font-size: smaller;
     color: antiquewhite;
@@ -58,3 +62,26 @@
     padding: 30px;
 }
 
+.users_pages ul {
+    display: flex;
+    justify-content: space-around;
+}
+.users_pages ul li{
+    list-style-type: none;
+}
+.page {
+    color: white;
+}
+
+.page:hover {
+    cursor: pointer;
+}
+
+.active {
+    color: gold;
+    font-weight: bold;
+}
+
+.inputUsersPerPage {
+
+}
