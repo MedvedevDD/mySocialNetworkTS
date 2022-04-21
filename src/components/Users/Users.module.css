@@ -31,10 +31,12 @@
     justify-content: space-around;
     text-align: center;
     padding: 20px;
+    flex-wrap: wrap;
 }
 
 .nameModule {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     padding: 30px;
 }
@@ -53,6 +55,7 @@
 .userdata .nameModule .status {
     font-size: smaller;
     color: antiquewhite;
+    line-break: anywhere;
 }
 
 .location {
@@ -64,17 +67,22 @@
 
 .users_pages ul {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    height: 25px;
 }
-.users_pages ul li{
+
+.users_pages ul li {
+    min-width: 26px;
+    text-align: center;
     list-style-type: none;
-    padding: 0 15px 0;
-    border: 1px solid black;
-    border-color: gold;
+    padding: 0 10px 0;
+    border: 1px solid gold;
     border-radius: 10px;
 }
+
 .page {
-    color: white;
+    color: darkgray;
+    /*text-align: center;*/
 }
 
 .page:hover {
@@ -86,11 +94,28 @@
     font-weight: bold;
 }
 
+.users_pages ul li.active {
+    border: 2px solid gold;
+}
+
 ul .button {
     width: 85px;
     background: midnightblue;
     color: white;
-    border: 1px solid black;
-    border-color: gold;
+    border: 2px solid gold;
+    border-radius: 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button:disabled {
+    color: darkgray;
+    opacity: 30%;;
+}
+
+.select__item {
+    margin-left: 10px;
     border-radius: 10px;
 }

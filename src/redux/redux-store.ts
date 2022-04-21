@@ -7,7 +7,7 @@ import usersReducer, {
     setAmountOfUsersAC,
     setCurrentPageAC,
     setFirstPageOfPeginationAC,
-    setUsersAC, setUsersPerPageAC,
+    setUsersAC, setUsersPerPageAC, toggleIsLoadingAC,
     unFollowAC
 } from "./users-reducer";
 
@@ -66,6 +66,7 @@ export type ActionTypes =
     | ReturnType<typeof setAmountOfUsersAC>
     | ReturnType<typeof setFirstPageOfPeginationAC>
     | ReturnType<typeof setUsersPerPageAC>
+    | ReturnType<typeof toggleIsLoadingAC>
 
 //@ts-ignore
 window.store = store
