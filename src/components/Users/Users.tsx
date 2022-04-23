@@ -2,12 +2,12 @@ import React from "react"
 import styles from "./Users.module.css";
 import userPhoto from "../../assets/user.png"
 import {UsersPropsType} from "./UsersContainer";
+import {NavLink} from "react-router-dom";
 
 const Users = (props: UsersPropsType) => {
     let pageAmount = Math.ceil(props.amountOfUsers / props.usersPerPage)
 
     let p = props.firstPageOfPagination;
-    console.log(p)
     let pageNumberArray = [];
     // if (p=1) { setPreviousBtnDisabled(true)   }
     (p < 1) && props.setFirstPageOfPegination(1)
@@ -70,8 +70,10 @@ const Users = (props: UsersPropsType) => {
                     <div className={styles.user} key={u.id}>
 
             <span className={styles.avatar}>
+                <NavLink to={"/profile/" + u.id}>
                 <img className={styles.photo} src={u.photos.small != null ? u.photos.small : userPhoto}
                      alt={"User Avatar"}/>
+                </NavLink>
                 <div className={styles.button__element}>
                    {(u.followed) ?
                        <button className={styles.button} onClick={() =>
@@ -84,7 +86,9 @@ const Users = (props: UsersPropsType) => {
 
                         <div className={styles.userdata}>
                             <div className={styles.nameModule}>
-                                <div className={styles.userName}>{u.name}</div>
+
+                                <NavLink to={"/profile/" + u.id} className={styles.userName}>{u.name}</NavLink>
+                                
                                 <div className={styles.status}>{u.status ? u.status : "Статус отсутствует"}</div>
                             </div>
                             <div className={styles.location}>

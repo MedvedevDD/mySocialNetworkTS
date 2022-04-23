@@ -6,8 +6,8 @@
 }
 
 .photo {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
     border-radius: 30px;
 }
 
@@ -30,7 +30,7 @@
     display: flex;
     justify-content: space-around;
     text-align: center;
-    padding: 20px;
+    ..padding: 20px;
     flex-wrap: wrap;
 }
 
@@ -38,7 +38,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 30px;
+    justify-content: space-around;
+    padding: 20px;
 }
 
 .userdata .nameModule .userName {
@@ -46,6 +47,7 @@
     font-weight: bold;
     color: midnightblue;
     /*padding: 10px;*/
+    text-decoration: none;
 }
 
 .userdata .nameModule .userName:hover {
@@ -61,8 +63,8 @@
 .location {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 30px;
+    justify-content: space-around;
+    padding: 20px;
 }
 
 .users_pages ul {
@@ -87,6 +89,8 @@
 
 .page:hover {
     cursor: pointer;
+    border: 2px solid gold;
+    transition: all 2ms;
 }
 
 .active {
@@ -108,6 +112,7 @@ ul .button {
 
 .button:hover {
     cursor: pointer;
+    border: 3px solid gold;
 }
 
 .button:disabled {

@@ -1,6 +1,37 @@
-.description {
-    padding: 20px;
-}
 .image {
     width: 100%;
+}
+
+.profileInfoBox {
+    padding: 20px;
+    color: blanchedalmond;
+}
+
+.userPhotoLarge {
+    max-width: 500px;
+}
+.userPhotoLarge img{
+    border-radius: 15px;
+}
+
+.userFullName {
+    font-size: xxx-large;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.aboutMeBlock {
+
+}
+.aboutMeTitle {
+    display: block;
+    font-size: larger;
+}
+
+.userLinkBox {
+    padding: 20px 0px;
+}
+.userLinkBox a {
+    padding-left: 10px;
 }

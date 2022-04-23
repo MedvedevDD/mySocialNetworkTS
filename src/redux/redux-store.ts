@@ -1,15 +1,14 @@
 import {combineReducers, createStore} from "redux";
-import profileReducer, {addPostAC, newPostTextChangeAC} from "./profile-reducer";
+import profileReducer, {addPostAC, newPostTextChangeAC, setUserProfile} from "./profile-reducer";
 import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer, {
-    followAC,
-    setAmountOfUsersAC,
-    setCurrentPageAC,
-    setFirstPageOfPeginationAC,
-    setUsersAC, setUsersPerPageAC, toggleIsLoadingAC,
-    unFollowAC
-} from "./users-reducer";
+    follow,
+    setAmountOfUsers,
+    setCurrentPage,
+    setFirstPageOfPegination,
+    setUsers, setUsersPerPage, setToggleIsLoading,
+    unFollow} from "./users-reducer";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -59,14 +58,15 @@ export type ActionTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof newPostTextChangeAC>
     | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setAmountOfUsersAC>
-    | ReturnType<typeof setFirstPageOfPeginationAC>
-    | ReturnType<typeof setUsersPerPageAC>
-    | ReturnType<typeof toggleIsLoadingAC>
+    | ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setAmountOfUsers>
+    | ReturnType<typeof setFirstPageOfPegination>
+    | ReturnType<typeof setUsersPerPage>
+    | ReturnType<typeof setToggleIsLoading>
+    | ReturnType<typeof setUserProfile>
 
 //@ts-ignore
 window.store = store

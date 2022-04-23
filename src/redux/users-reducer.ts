@@ -9,6 +9,7 @@ const SET_FIRST_PAGE_OF_PAGINATION = "SET_FIRST_PAGE_OF_PAGINATION"
 const SET_USERS_PER_PAGE = "SET_USERS_PER_PAGE"
 const TOGGLE_IS_LOADING = "TOGGLE_IS_LOADING"
 
+
 type LocationType = {
     country: string,
     cityName: string
@@ -31,6 +32,7 @@ export type UsersStateType = {
     usersPerPage: number,
     firstPageOfPagination: number,
     isLoading: boolean
+
 }
 const initialState: UsersStateType = {
     users: [],
@@ -38,7 +40,8 @@ const initialState: UsersStateType = {
     currentPage: 1,
     usersPerPage: 10,
     firstPageOfPagination: 1,
-    isLoading: false
+    isLoading: false,
+
 }
 /*let users = [
     {id: new Date().getTime(), photoUrl: "", fullName: "Dmitry", status: "I'm the BOSS", location: {country: "Russia", cityName: "Belgorod"}},
@@ -81,21 +84,23 @@ const usersReducer = (state: UsersStateType = initialState, action: ActionTypes)
             return {...state, usersPerPage: action.numberOfUsersPerPage}
         case TOGGLE_IS_LOADING:
             return {...state, isLoading: action.isLoading}
+
         default:
             return state
     }
 
 }
-export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
-export const unFollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
-export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
-export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-export const setAmountOfUsersAC = (allUsersAmount: number) => ({type: SET_AMOUNT_OF_USERS, allUsersAmount} as const)
-export const setFirstPageOfPeginationAC = (firstPaginationPage: number) => ({
+export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
+export const unFollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
+export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setAmountOfUsers = (allUsersAmount: number) => ({type: SET_AMOUNT_OF_USERS, allUsersAmount} as const)
+export const setFirstPageOfPegination = (firstPaginationPage: number) => ({
     type: SET_FIRST_PAGE_OF_PAGINATION, firstPaginationPage
 } as const)
-export const setUsersPerPageAC = (numberOfUsersPerPage: number) => ({
+export const setUsersPerPage = (numberOfUsersPerPage: number) => ({
     type: SET_USERS_PER_PAGE, numberOfUsersPerPage
 } as const)
-export const toggleIsLoadingAC = (isLoading: boolean) => ({type: TOGGLE_IS_LOADING, isLoading} as const)
+export const setToggleIsLoading = (isLoading: boolean) => ({type: TOGGLE_IS_LOADING, isLoading} as const)
+
 export default usersReducer;

@@ -19,7 +19,7 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
         setNewMessage(e.currentTarget.value)
     }
     const addNewMessage = () => {
-        rest.addNewMessage(newMessage)
+        newMessage.trim() != "" && rest.addNewMessage(newMessage)
         setNewMessage("")
     }
     const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {

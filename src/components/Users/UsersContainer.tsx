@@ -2,16 +2,14 @@ import React from "react";
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
-    followAC,
-    setAmountOfUsersAC,
-    setCurrentPageAC, setFirstPageOfPeginationAC,
-    setUsersAC, setUsersPerPageAC, toggleIsLoadingAC,
-    unFollowAC,
+    follow,
+    setAmountOfUsers,
+    setCurrentPage, setFirstPageOfPegination,
+    setUsers, setUsersPerPage, setToggleIsLoading,
+    unFollow,
     UserType
 } from "../../redux/users-reducer";
-import {Dispatch} from "redux";
 import {AppRootStateType} from "../../redux/redux-store";
-
 import axios from "axios";
 import {Preloader} from "../preloader/Preloader";
 
@@ -54,6 +52,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     //         this.props.setUsersPerPage(Number(e.currentTarget.value))
     //     }
     // }
+
     render() {
 
         return <>
@@ -111,33 +110,34 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 }
 
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
-    return {
-        follow: (userId: number) => {
-            dispatch(followAC(userId))
-        },
-        unFollow: (userId: number) => {
-            dispatch(unFollowAC(userId))
-        },
-        setUsers: (users: Array<UserType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setAmountOfUsers: (allUsers: number) => {
-            dispatch(setAmountOfUsersAC(allUsers))
-        },
-        setFirstPageOfPegination: (firstPaginationPage: number) => {
-            dispatch(setFirstPageOfPeginationAC(firstPaginationPage))
-        },
-        setUsersPerPage: (numberOfUsersPerPage: number) => {
-            dispatch(setUsersPerPageAC(numberOfUsersPerPage))
-        },
-        setToggleIsLoading: (isLoading: boolean) => {
-            dispatch(toggleIsLoadingAC(isLoading))
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+//     return {
+//         follow: (userId: number) => {
+//             dispatch(followAC(userId))
+//         },
+//         unFollow: (userId: number) => {
+//             dispatch(unFollowAC(userId))
+//         },
+//         setUsers: (users: Array<UserType>) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (currentPage: number) => {
+//             dispatch(setCurrentPageAC(currentPage))
+//         },
+//         setAmountOfUsers: (allUsers: number) => {
+//             dispatch(setAmountOfUsersAC(allUsers))
+//         },
+//         setFirstPageOfPegination: (firstPaginationPage: number) => {
+//             dispatch(setFirstPageOfPeginationAC(firstPaginationPage))
+//         },
+//         setUsersPerPage: (numberOfUsersPerPage: number) => {
+//             dispatch(setUsersPerPageAC(numberOfUsersPerPage))
+//         },
+//         setToggleIsLoading: (isLoading: boolean) => {
+//             dispatch(toggleIsLoadingAC(isLoading))
+//         }
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, { follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
+    setUsersPerPage, setToggleIsLoading})(UsersContainer)
