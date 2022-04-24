@@ -2,6 +2,7 @@ import React from "react";
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 import { MyFriendsContainer } from "./MyFriendsContainer";
+import store from "../../redux/redux-store";
 
 
 
@@ -11,7 +12,7 @@ function Navbar() {
         <nav className={s.nav}>
             <div>
                 <div className={s.item}>
-                    <NavLink to="/Profile"
+                    <NavLink to={"/profile/"+ store.getState().auth.id}
                              className={({isActive}) => (isActive ? s.active : 'inactive')}
                     >Profile</NavLink>
                 </div>

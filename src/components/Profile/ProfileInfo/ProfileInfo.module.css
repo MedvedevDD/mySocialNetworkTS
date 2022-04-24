@@ -30,7 +30,12 @@
 }
 
 .userLinkBox {
-    padding: 20px 0px;
+    max-width: 500px;
+    padding: 10px 10px;
+    border: 1px solid gold;
+    border-radius: 15px;
+    margin: 10px 0px;
+
 }
 .userLinkBox a {
     padding-left: 10px;

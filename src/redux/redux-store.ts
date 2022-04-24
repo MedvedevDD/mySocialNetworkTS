@@ -9,12 +9,14 @@ import usersReducer, {
     setFirstPageOfPegination,
     setUsers, setUsersPerPage, setToggleIsLoading,
     unFollow} from "./users-reducer";
+import authReducer, {setUserData} from "./auth-reducer";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
@@ -67,6 +69,7 @@ export type ActionTypes =
     | ReturnType<typeof setUsersPerPage>
     | ReturnType<typeof setToggleIsLoading>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setUserData>
 
 //@ts-ignore
 window.store = store

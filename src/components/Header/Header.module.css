@@ -1,11 +1,25 @@
 .header {
     grid-area: h;
     background-color: #107210;
-
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .header img {
     width: 80px;
     border-bottom-left-radius: 15px;
+}
+
+.loginBlock {
+    padding-right: 50px;
+    color: whitesmoke;
+}
+
+.loginTitle {
+    color: whitesmoke;
+    text-decoration: none;
+
 }
