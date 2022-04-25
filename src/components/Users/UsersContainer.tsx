@@ -10,8 +10,8 @@ import {
     UserType
 } from "../../redux/users-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
-import axios from "axios";
 import {Preloader} from "../preloader/Preloader";
+import {usersApi} from "../../api/api";
 
 export type UsersPropsType = MapStateToPropsType & mapDispatchToPropsType
 
@@ -19,26 +19,20 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.setToggleIsLoading(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPerPage}`, {
-            withCredentials: true
+        usersApi.getUsers(this.props.usersPerPage).then((response) => {
+            this.props.setToggleIsLoading(false)
+            this.props.setUsers(response.items)
+            this.props.setAmountOfUsers(response.totalCount)
         })
-            .then(response => {
-                this.props.setToggleIsLoading(false)
-                this.props.setUsers(response.data.items)
-                this.props.setAmountOfUsers(response.data.totalCount)
-            })
     }
 
     setCurrentPage = (p: number) => {
         this.props.setToggleIsLoading(true)
         this.props.setCurrentPage(p)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.usersPerPage}`, {
-            withCredentials: true
-            }
-        )
+        usersApi.getCurrentPage(p, this.props.usersPerPage)
             .then(response => {
                 this.props.setToggleIsLoading(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(response.items)
             })
     }
     setUsersPerPage = (e: number) => {
@@ -46,12 +40,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
         this.props.setUsersPerPage(e)
         this.props.setCurrentPage(1)
         this.props.setFirstPageOfPegination(1)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${e}`, {
-            withCredentials: true
-        })
+        usersApi.getUsersPerPage(this.props.currentPage, e)
             .then(response => {
                 this.props.setToggleIsLoading(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(response.items)
             })
     }
     // const setAmountOfUsersPerPage = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -146,5 +138,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //     }
 // }
 
-export default connect(mapStateToProps, { follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
-    setUsersPerPage, setToggleIsLoading})(UsersContainer)
+export default connect(mapStateToProps, {
+    follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
+    setUsersPerPage, setToggleIsLoading
+})(UsersContainer)
