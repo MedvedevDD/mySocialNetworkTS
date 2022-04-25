@@ -3,6 +3,7 @@ import styles from "./Users.module.css";
 import userPhoto from "../../assets/user.png"
 import {UsersPropsType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 const Users = (props: UsersPropsType) => {
     let pageAmount = Math.ceil(props.amountOfUsers / props.usersPerPage)
@@ -77,9 +78,35 @@ const Users = (props: UsersPropsType) => {
                 <div className={styles.button__element}>
                    {(u.followed) ?
                        <button className={styles.button} onClick={() =>
-                           props.unFollow(u.id)}>UnFollow</button>
+                           axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                               withCredentials: true,
+                               headers: {
+                                   "API-KEY": "d8ddbbfd-73b3-4c97-83fb-b21eaa65f146"
+                               }
+
+                           })
+                               .then(response => {
+                                   if (response.data.resultCode === 0) {
+                                       props.unFollow(u.id)
+                                   }
+                               })
+
+                       }>UnFollow</button>
                        : <button className={styles.button} onClick={() =>
-                           props.follow(u.id)}>Follow</button>
+                           axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                               withCredentials: true,
+                               headers: {
+                                   "API-KEY": "d8ddbbfd-73b3-4c97-83fb-b21eaa65f146"
+                               }
+                           })
+                               .then(response => {
+                                   if (response.data.resultCode === 0) {
+                                       props.follow(u.id)
+                                   }
+                               })
+
+
+                       }>Follow</button>
                    }
                 </div>
             </span>
@@ -88,7 +115,7 @@ const Users = (props: UsersPropsType) => {
                             <div className={styles.nameModule}>
 
                                 <NavLink to={"/profile/" + u.id} className={styles.userName}>{u.name}</NavLink>
-                                
+
                                 <div className={styles.status}>{u.status ? u.status : "Статус отсутствует"}</div>
                             </div>
                             <div className={styles.location}>

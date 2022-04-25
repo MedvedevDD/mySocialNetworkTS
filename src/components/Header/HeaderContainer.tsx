@@ -10,7 +10,10 @@ export type headerContainerPropsType = mapStateToPropsType & mapDispatchToPropsT
 class HeaderContainer extends React.Component<headerContainerPropsType> {
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
+            withCredentials: true,
+            headers: {
+                "API-KEY": "d8ddbbfd-73b3-4c97-83fb-b21eaa65f146"
+            }
         })
             .then(response => {
                 if (response.data.resultCode === 0) {
@@ -20,10 +23,10 @@ class HeaderContainer extends React.Component<headerContainerPropsType> {
                     // axios.get(`https://social-network.samuraijs.com/api/1.0/` + response.data.data.id, {
                     //     withCredentials: true
                     // })
-                        // .then(response => {
-                        //     if (response.data.resultCode === 0) {
-                        //
-                        //         this.props.setUserData({id, login, email})}})
+                    // .then(response => {
+                    //     if (response.data.resultCode === 0) {
+                    //
+                    //         this.props.setUserData({id, login, email})}})
 
                 }
             })

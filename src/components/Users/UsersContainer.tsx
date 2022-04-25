@@ -19,7 +19,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.setToggleIsLoading(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPerPage}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPerPage}`, {
+            withCredentials: true
+        })
             .then(response => {
                 this.props.setToggleIsLoading(false)
                 this.props.setUsers(response.data.items)
@@ -30,7 +32,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
     setCurrentPage = (p: number) => {
         this.props.setToggleIsLoading(true)
         this.props.setCurrentPage(p)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.usersPerPage}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.usersPerPage}`, {
+            withCredentials: true
+            }
+        )
             .then(response => {
                 this.props.setToggleIsLoading(false)
                 this.props.setUsers(response.data.items)
@@ -41,7 +46,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
         this.props.setUsersPerPage(e)
         this.props.setCurrentPage(1)
         this.props.setFirstPageOfPegination(1)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${e}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${e}`, {
+            withCredentials: true
+        })
             .then(response => {
                 this.props.setToggleIsLoading(false)
                 this.props.setUsers(response.data.items)
