@@ -3,7 +3,8 @@ import styles from "./Users.module.css";
 import userPhoto from "../../assets/user.png"
 import {UsersPropsType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {usersApi} from "../../api/api";
+import upImg from "../../assets/images/UpArrow.png"
 
 const Users = (props: UsersPropsType) => {
     let pageAmount = Math.ceil(props.amountOfUsers / props.usersPerPage)
@@ -30,7 +31,7 @@ const Users = (props: UsersPropsType) => {
     //     pages.push(i)
     // }
 
-    return <div>
+    return <div className={styles.allBigUsersList}>
 
 
         {/*<div className={styles.users_pages}>*/}
@@ -77,36 +78,34 @@ const Users = (props: UsersPropsType) => {
                 </NavLink>
                 <div className={styles.button__element}>
                    {(u.followed) ?
-                       <button className={styles.button} onClick={() =>
-                           axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                               withCredentials: true,
-                               headers: {
-                                   "API-KEY": "d8ddbbfd-73b3-4c97-83fb-b21eaa65f146"
+                       <button disabled={props.followingInProgress.some(id => id === u.id)} className={styles.button}
+                               onClick={() => {
+                                   props.toggleFollowingProgress(u.id, true)
+                                   usersApi.unfollowButton(u.id)
+                                       .then(response => {
+                                           if (response.data.resultCode === 0) {
+                                               props.unFollow(u.id)
+                                           }
+                                           props.toggleFollowingProgress(u.id, false)
+                                       })
+
                                }
 
-                           })
-                               .then(response => {
-                                   if (response.data.resultCode === 0) {
-                                       props.unFollow(u.id)
-                                   }
-                               })
-
-                       }>UnFollow</button>
-                       : <button className={styles.button} onClick={() =>
-                           axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                               withCredentials: true,
-                               headers: {
-                                   "API-KEY": "d8ddbbfd-73b3-4c97-83fb-b21eaa65f146"
-                               }
-                           })
-                               .then(response => {
-                                   if (response.data.resultCode === 0) {
-                                       props.follow(u.id)
-                                   }
-                               })
+                               }>UnFollow</button>
+                       : <button disabled={props.followingInProgress.some(id => id === u.id)} className={styles.button}
+                                 onClick={() => {
+                                     props.toggleFollowingProgress(u.id, true)
+                                     usersApi.followButton(u.id)
+                                         .then(response => {
+                                             if (response.data.resultCode === 0) {
+                                                 props.follow(u.id)
+                                             }
+                                             props.toggleFollowingProgress(u.id, false)
+                                         })
+                                 }
 
 
-                       }>Follow</button>
+                                 }>Follow</button>
                    }
                 </div>
             </span>
@@ -126,6 +125,15 @@ const Users = (props: UsersPropsType) => {
 
                     </div>
             )}
+        <div>
+            <img src={upImg} className={styles.btn_up} onClick={()=>{
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth',
+                });}
+            }/>
+        </div>
     </div>
 
 

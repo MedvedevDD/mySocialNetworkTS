@@ -1,4 +1,6 @@
 import {ActionTypes} from "./redux-store";
+import {mapDispatchToPropsType} from "../components/Users/UsersContainer";
+import {usersApi} from "../api/api";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -8,6 +10,7 @@ const SET_AMOUNT_OF_USERS = "SET_AMOUNT_OF_USERS"
 const SET_FIRST_PAGE_OF_PAGINATION = "SET_FIRST_PAGE_OF_PAGINATION"
 const SET_USERS_PER_PAGE = "SET_USERS_PER_PAGE"
 const TOGGLE_IS_LOADING = "TOGGLE_IS_LOADING"
+const TOGGLE_FOLLOWING_PROGRESS = "TOGGLE_FOLLOWING_PROGRESS"
 
 
 type LocationType = {
@@ -31,7 +34,8 @@ export type UsersStateType = {
     currentPage: number,
     usersPerPage: number,
     firstPageOfPagination: number,
-    isLoading: boolean
+    isLoading: boolean,
+    followingInProgress: number[]
 
 }
 const initialState: UsersStateType = {
@@ -41,13 +45,8 @@ const initialState: UsersStateType = {
     usersPerPage: 10,
     firstPageOfPagination: 1,
     isLoading: false,
-
+    followingInProgress: []
 }
-/*let users = [
-    {id: new Date().getTime(), photoUrl: "", fullName: "Dmitry", status: "I'm the BOSS", location: {country: "Russia", cityName: "Belgorod"}},
-    {id: new Date().getTime(), photoUrl: "", fullName: "Tatiana", status: "I'm the BOSS", location: {country: "Russia", cityName: "Belgorod"}},
-    {id: new Date().getTime(), photoUrl: "", fullName: "Veronik", status: "I'm the BOSS", location: {country: "Russia", cityName: "Belgorod"}},
-]*/
 
 const usersReducer = (state: UsersStateType = initialState, action: ActionTypes): UsersStateType => {
     switch (action.type) {
@@ -84,6 +83,12 @@ const usersReducer = (state: UsersStateType = initialState, action: ActionTypes)
             return {...state, usersPerPage: action.numberOfUsersPerPage}
         case TOGGLE_IS_LOADING:
             return {...state, isLoading: action.isLoading}
+        case TOGGLE_FOLLOWING_PROGRESS:
+            return {
+                ...state, followingInProgress: (action.followingInProgress
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id != action.userId))
+            }
 
         default:
             return state
@@ -102,5 +107,36 @@ export const setUsersPerPage = (numberOfUsersPerPage: number) => ({
     type: SET_USERS_PER_PAGE, numberOfUsersPerPage
 } as const)
 export const setToggleIsLoading = (isLoading: boolean) => ({type: TOGGLE_IS_LOADING, isLoading} as const)
+export const toggleFollowingProgress = (userId: number, followingInProgress: boolean) => ({
+    type: TOGGLE_FOLLOWING_PROGRESS,
+    userId,
+    followingInProgress
+} as const)
+
+export const getUsersThunkCreator = (usersPerPage: number, currentUsersPage: number) => {
+    return (dispatch: any) => {
+        dispatch(setToggleIsLoading(true))
+        usersApi.getUsers(usersPerPage, currentUsersPage).then((response) => {
+            dispatch(setToggleIsLoading(false))
+            dispatch(setUsers(response.items))
+            dispatch(setAmountOfUsers(response.totalCount))
+        })
+    }
+}
+
+export const setUsersPerPageThunkCreator = (e: number, currentPage: number) => {
+    return (dispatch: any) => {
+        dispatch(setToggleIsLoading(true))
+        dispatch(setUsersPerPage(e))
+        dispatch(setCurrentPage(1))
+        dispatch(setFirstPageOfPegination(1))
+        usersApi.getUsersPerPage(currentPage, e)
+            .then(response => {
+                dispatch(setToggleIsLoading(false))
+                dispatch(setUsers(response.items))
+            })
+    }
+
+}
 
 export default usersReducer;

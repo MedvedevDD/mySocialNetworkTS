@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from "redux";
+import {combineReducers, createStore, applyMiddleware} from "redux";
 import profileReducer, {addPostAC, newPostTextChangeAC, setUserProfile} from "./profile-reducer";
 import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
@@ -8,8 +8,10 @@ import usersReducer, {
     setCurrentPage,
     setFirstPageOfPegination,
     setUsers, setUsersPerPage, setToggleIsLoading,
-    unFollow} from "./users-reducer";
+    unFollow, toggleFollowingProgress
+} from "./users-reducer";
 import authReducer, {setUserData} from "./auth-reducer";
+import thunk from "redux-thunk";
 
 let rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -20,7 +22,7 @@ let rootReducer = combineReducers({
 })
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-let store = createStore(rootReducer)
+let store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default store;
 /*type DialogType = {
@@ -70,6 +72,7 @@ export type ActionTypes =
     | ReturnType<typeof setToggleIsLoading>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserData>
+    | ReturnType<typeof toggleFollowingProgress>
 
 //@ts-ignore
 window.store = store

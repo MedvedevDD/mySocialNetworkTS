@@ -7,7 +7,7 @@ import {
     setCurrentPage, setFirstPageOfPegination,
     setUsers, setUsersPerPage, setToggleIsLoading,
     unFollow,
-    UserType
+    UserType, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator
 } from "../../redux/users-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {Preloader} from "../preloader/Preloader";
@@ -18,39 +18,15 @@ export type UsersPropsType = MapStateToPropsType & mapDispatchToPropsType
 class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
-        this.props.setToggleIsLoading(true)
-        usersApi.getUsers(this.props.usersPerPage).then((response) => {
-            this.props.setToggleIsLoading(false)
-            this.props.setUsers(response.items)
-            this.props.setAmountOfUsers(response.totalCount)
-        })
+        this.props.getUsersThunkCreator(this.props.usersPerPage, 1)
     }
 
     setCurrentPage = (p: number) => {
-        this.props.setToggleIsLoading(true)
-        this.props.setCurrentPage(p)
-        usersApi.getCurrentPage(p, this.props.usersPerPage)
-            .then(response => {
-                this.props.setToggleIsLoading(false)
-                this.props.setUsers(response.items)
-            })
+        this.props.getUsersThunkCreator(this.props.usersPerPage, p)
     }
     setUsersPerPage = (e: number) => {
-        this.props.setToggleIsLoading(true)
-        this.props.setUsersPerPage(e)
-        this.props.setCurrentPage(1)
-        this.props.setFirstPageOfPegination(1)
-        usersApi.getUsersPerPage(this.props.currentPage, e)
-            .then(response => {
-                this.props.setToggleIsLoading(false)
-                this.props.setUsers(response.items)
-            })
+        this.props.setUsersPerPageThunkCreator(e, this.props.currentPage)
     }
-    // const setAmountOfUsersPerPage = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     if (e.key === "Enter") {
-    //         this.props.setUsersPerPage(Number(e.currentTarget.value))
-    //     }
-    // }
 
     render() {
 
@@ -70,6 +46,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    setUsers={this.props.setUsers}
                    setToggleIsLoading={this.props.setToggleIsLoading}
                    isLoading={this.props.isLoading}
+                   followingInProgress={this.props.followingInProgress}
+                   toggleFollowingProgress={this.props.toggleFollowingProgress}
+                   getUsersThunkCreator={this.props.getUsersThunkCreator}
+                   setUsersPerPageThunkCreator={this.props.setUsersPerPageThunkCreator}
             />
         </>
 
@@ -82,10 +62,11 @@ type MapStateToPropsType = {
     currentPage: number,
     usersPerPage: number,
     firstPageOfPagination: number,
-    isLoading: boolean
+    isLoading: boolean,
+    followingInProgress: Array<number>
 
 }
-type mapDispatchToPropsType = {
+export type mapDispatchToPropsType = {
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     setUsers: (users: Array<UserType>) => void
@@ -94,6 +75,9 @@ type mapDispatchToPropsType = {
     setFirstPageOfPegination: (firstPaginationPage: number) => void
     setUsersPerPage: (numberOfUsersPerPage: number) => void
     setToggleIsLoading: (isLoading: boolean) => void
+    toggleFollowingProgress: (userId: number, followingInProgress:boolean)=>void
+    getUsersThunkCreator: (usersPerPage:number, currentUsersPage:number)=>void
+    setUsersPerPageThunkCreator: (e:number, currentPage:number) => void
 }
 
 
@@ -104,7 +88,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         usersPerPage: state.usersPage.usersPerPage,
         firstPageOfPagination: state.usersPage.firstPageOfPagination,
-        isLoading: state.usersPage.isLoading
+        isLoading: state.usersPage.isLoading,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -140,5 +125,5 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 export default connect(mapStateToProps, {
     follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
-    setUsersPerPage, setToggleIsLoading
+    setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator
 })(UsersContainer)

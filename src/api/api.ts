@@ -10,31 +10,44 @@ const instance = axios.create({
 })
 
 export const usersApi = {
-    getUsers(usersPerPage: number) {
-        return instance.get(`users?count=${usersPerPage}`)
-            .then(response => {
-                return response.data
-            })
-    },
-    getCurrentPage(p: number, usersPerPage: number) {
+    getUsers(usersPerPage: number, p: number) {
         return instance.get(`users?page=${p}&count=${usersPerPage}`)
             .then(response => {
                 return response.data
             })
     },
+    // (usersPerPage: number) {
+    //     return instance.get(`users?count=${usersPerPage}`)
+    //         .then(response => {
+    //             return response.data
+    //         })
+    // },
+    // getCurrentPage(p: number, usersPerPage: number) {
+    //     return instance.get(`users?page=${p}&count=${usersPerPage}`)
+    //         .then(response => {
+    //             return response.data
+    //         })
+    // },
     getUsersPerPage(currentPage: number, e: number) {
         return instance.get(`users?page=${currentPage}&count=${e}`)
             .then(response => {
                 return response.data
             })
     },
-    getMyAuthData(){
-      return instance.get(`auth/me`)
-          .then(response=>{
-              return response.data
-          })
+    getMyAuthData() {
+        return instance.get(`auth/me`)
+            .then(response => {
+                return response.data
+            })
     },
-    getMyProfileData(userId:number){
+    getMyProfileData(userId: number) {
         return instance.get(`profile/` + userId)
+    },
+    unfollowButton(uId: number) {
+        return instance.delete(`follow/${uId}`)
+    },
+    followButton(uId: number) {
+        return instance.post(`follow/${uId}`)
     }
+
 }
