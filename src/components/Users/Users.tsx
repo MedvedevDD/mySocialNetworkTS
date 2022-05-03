@@ -1,10 +1,23 @@
 import React from "react"
 import styles from "./Users.module.css";
 import userPhoto from "../../assets/user.png"
-import {UsersPropsType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
-import {usersApi} from "../../api/api";
 import upImg from "../../assets/images/UpArrow.png"
+import {UserType} from "../../redux/users-reducer";
+
+type UsersPropsType = {
+    users: Array<UserType>
+    amountOfUsers: number
+    usersPerPage: number
+    currentPage: number
+    firstPageOfPagination: number
+    setFirstPageOfPegination: (firstPaginationPage: number) => void
+    setCurrentPage: (currentPage: number) => void
+    setUsersPerPage: (numberOfUsersPerPage: number) => void
+    followingInProgress: Array<number>
+    unfollowBtnThunkCreator: (uId:number) => void
+    followBtnThunkCreator: (uId:number) => void
+}
 
 const Users = (props: UsersPropsType) => {
     let pageAmount = Math.ceil(props.amountOfUsers / props.usersPerPage)
@@ -80,28 +93,13 @@ const Users = (props: UsersPropsType) => {
                    {(u.followed) ?
                        <button disabled={props.followingInProgress.some(id => id === u.id)} className={styles.button}
                                onClick={() => {
-                                   props.toggleFollowingProgress(u.id, true)
-                                   usersApi.unfollowButton(u.id)
-                                       .then(response => {
-                                           if (response.data.resultCode === 0) {
-                                               props.unFollow(u.id)
-                                           }
-                                           props.toggleFollowingProgress(u.id, false)
-                                       })
-
+                                   props.unfollowBtnThunkCreator(u.id)
                                }
 
                                }>UnFollow</button>
                        : <button disabled={props.followingInProgress.some(id => id === u.id)} className={styles.button}
                                  onClick={() => {
-                                     props.toggleFollowingProgress(u.id, true)
-                                     usersApi.followButton(u.id)
-                                         .then(response => {
-                                             if (response.data.resultCode === 0) {
-                                                 props.follow(u.id)
-                                             }
-                                             props.toggleFollowingProgress(u.id, false)
-                                         })
+                                     props.followBtnThunkCreator(u.id)
                                  }
 
 

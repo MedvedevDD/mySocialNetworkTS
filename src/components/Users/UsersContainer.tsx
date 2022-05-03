@@ -4,18 +4,25 @@ import Users from "./Users";
 import {
     follow,
     setAmountOfUsers,
-    setCurrentPage, setFirstPageOfPegination,
-    setUsers, setUsersPerPage, setToggleIsLoading,
+    setCurrentPage,
+    setFirstPageOfPegination,
+    setUsers,
+    setUsersPerPage,
+    setToggleIsLoading,
     unFollow,
-    UserType, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator
+    UserType,
+    toggleFollowingProgress,
+    getUsersThunkCreator,
+    setUsersPerPageThunkCreator,
+    unfollowBtnThunkCreator,
+    followBtnThunkCreator
 } from "../../redux/users-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {Preloader} from "../preloader/Preloader";
-import {usersApi} from "../../api/api";
 
-export type UsersPropsType = MapStateToPropsType & mapDispatchToPropsType
+export type UsersContainerPropsType = MapStateToPropsType & mapDispatchToPropsType
 
-class UsersContainer extends React.Component<UsersPropsType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
         this.props.getUsersThunkCreator(this.props.usersPerPage, 1)
@@ -39,17 +46,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    usersPerPage={this.props.usersPerPage}
                    setUsersPerPage={this.setUsersPerPage}
                    users={this.props.users}
-                   unFollow={this.props.unFollow}
-                   follow={this.props.follow}
                    amountOfUsers={this.props.amountOfUsers}
-                   setAmountOfUsers={this.props.setAmountOfUsers}
-                   setUsers={this.props.setUsers}
-                   setToggleIsLoading={this.props.setToggleIsLoading}
-                   isLoading={this.props.isLoading}
                    followingInProgress={this.props.followingInProgress}
-                   toggleFollowingProgress={this.props.toggleFollowingProgress}
-                   getUsersThunkCreator={this.props.getUsersThunkCreator}
-                   setUsersPerPageThunkCreator={this.props.setUsersPerPageThunkCreator}
+                   unfollowBtnThunkCreator={this.props.unfollowBtnThunkCreator}
+                   followBtnThunkCreator={this.props.followBtnThunkCreator}
             />
         </>
 
@@ -78,6 +78,8 @@ export type mapDispatchToPropsType = {
     toggleFollowingProgress: (userId: number, followingInProgress:boolean)=>void
     getUsersThunkCreator: (usersPerPage:number, currentUsersPage:number)=>void
     setUsersPerPageThunkCreator: (e:number, currentPage:number) => void
+    unfollowBtnThunkCreator: (uId:number) => void
+    followBtnThunkCreator: (uId:number) => void
 }
 
 
@@ -125,5 +127,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 
 export default connect(mapStateToProps, {
     follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
-    setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator
+    setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
+    unfollowBtnThunkCreator, followBtnThunkCreator
 })(UsersContainer)

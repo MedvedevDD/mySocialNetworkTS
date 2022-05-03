@@ -116,6 +116,7 @@ export const toggleFollowingProgress = (userId: number, followingInProgress: boo
 export const getUsersThunkCreator = (usersPerPage: number, currentUsersPage: number) => {
     return (dispatch: any) => {
         dispatch(setToggleIsLoading(true))
+        dispatch(setCurrentPage(currentUsersPage))
         usersApi.getUsers(usersPerPage, currentUsersPage).then((response) => {
             dispatch(setToggleIsLoading(false))
             dispatch(setUsers(response.items))
@@ -137,6 +138,30 @@ export const setUsersPerPageThunkCreator = (e: number, currentPage: number) => {
             })
     }
 
+}
+export const unfollowBtnThunkCreator = (uId:number) => {
+    return (dispatch:any) => {
+        dispatch(toggleFollowingProgress(uId, true))
+        usersApi.unfollowButton(uId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                   dispatch(unFollow(uId))
+                }
+                dispatch(toggleFollowingProgress(uId, false))
+            })
+    }
+}
+export const followBtnThunkCreator = (uId:number) => {
+    return (dispatch:any) => {
+        dispatch(toggleFollowingProgress(uId, true))
+        usersApi.followButton(uId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(follow(uId))
+                }
+                dispatch(toggleFollowingProgress(uId, false))
+            })
+    }
 }
 
 export default usersReducer;
