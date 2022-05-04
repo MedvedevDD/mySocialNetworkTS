@@ -1,5 +1,6 @@
 import React from "react";
 import s from './ProfileInfo.module.css';
+import userPhoto from "../../../assets/user.png"
 import {Preloader} from "../../preloader/Preloader";
 import {UserProfileType} from "../../../redux/profile-reducer";
 
@@ -22,7 +23,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 
             <div className={s.profileInfoBox}>
                 <div className={s.userPhotoLarge}>
-                    <img src={props.profile.photos.large}/>
+                    <img src={props.profile.photos.large ? props.profile.photos.large : userPhoto}/>
                 </div>
                 <div className={s.userFullName}>
                     {props.profile.fullName}

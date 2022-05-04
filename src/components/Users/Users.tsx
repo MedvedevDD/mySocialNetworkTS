@@ -86,7 +86,7 @@ const Users = (props: UsersPropsType) => {
 
             <span className={styles.avatar}>
                 <NavLink to={"/profile/" + u.id}>
-                <img className={styles.photo} src={u.photos.small != null ? u.photos.small : userPhoto}
+                <img className={styles.photo} src={u.photos.small == null ? userPhoto : u.photos.small}
                      alt={"User Avatar"}/>
                 </NavLink>
                 <div className={styles.button__element}>

@@ -39,8 +39,7 @@ export const setUserData = ({id, login, email}: AuthStateType) => ({
     type: SET_USER_DATA, data: {id, login, email}
 } as const)
 
-export const getMyAuthDataThunkCreator = () => {
-    return (dispatch:any) => {
+export const getMyAuthDataThunkCreator = () => (dispatch:any) => {
         usersApi.getMyAuthData()
             .then(response => {
                 if (response.resultCode === 0) {
@@ -48,7 +47,7 @@ export const getMyAuthDataThunkCreator = () => {
                     dispatch(setUserData({id, login, email}))
                 }
             })
-    }
+
 }
 
 export default authReducer;
