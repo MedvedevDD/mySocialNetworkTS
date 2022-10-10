@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css";
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Navigate} from "react-router-dom";
 
 
 const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
@@ -27,6 +28,7 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
             addNewMessage()
         }
     }
+    if (!rest.authProgress) return <Navigate to={"/Login"}/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

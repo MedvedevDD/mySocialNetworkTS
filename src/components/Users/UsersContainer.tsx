@@ -1,4 +1,5 @@
 import React from "react";
+import {Navigate} from "react-router-dom";
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
@@ -36,6 +37,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 
     render() {
+        if (!this.props.authProgress) return <Navigate to={"/Login"}/>
 
         return <>
             {this.props.isLoading ? <Preloader/> : null}
@@ -63,7 +65,8 @@ type MapStateToPropsType = {
     usersPerPage: number,
     firstPageOfPagination: number,
     isLoading: boolean,
-    followingInProgress: Array<number>
+    followingInProgress: Array<number>,
+    authProgress: any
 
 }
 export type mapDispatchToPropsType = {
@@ -75,11 +78,11 @@ export type mapDispatchToPropsType = {
     setFirstPageOfPegination: (firstPaginationPage: number) => void
     setUsersPerPage: (numberOfUsersPerPage: number) => void
     setToggleIsLoading: (isLoading: boolean) => void
-    toggleFollowingProgress: (userId: number, followingInProgress:boolean)=>void
-    getUsersThunkCreator: (usersPerPage:number, currentUsersPage:number)=>void
-    setUsersPerPageThunkCreator: (e:number, currentPage:number) => void
-    unfollowBtnThunkCreator: (uId:number) => void
-    followBtnThunkCreator: (uId:number) => void
+    toggleFollowingProgress: (userId: number, followingInProgress: boolean) => void
+    getUsersThunkCreator: (usersPerPage: number, currentUsersPage: number) => void
+    setUsersPerPageThunkCreator: (e: number, currentPage: number) => void
+    unfollowBtnThunkCreator: (uId: number) => void
+    followBtnThunkCreator: (uId: number) => void
 }
 
 
@@ -91,7 +94,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         usersPerPage: state.usersPage.usersPerPage,
         firstPageOfPagination: state.usersPage.firstPageOfPagination,
         isLoading: state.usersPage.isLoading,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        authProgress: state.auth.isAutherized
     }
 }
 

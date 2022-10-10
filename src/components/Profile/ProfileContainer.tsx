@@ -5,7 +5,7 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {getProfileThunkCreator, ProfilePageType, setUserProfile, UserProfileType} from "../../redux/profile-reducer";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import {usersApi} from "../../api/api";
 
 export type ProfilePropsType = mapStateToPropsType & mapDispatchToPropsType
@@ -20,7 +20,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 
     render() {
-
+        if (!this.props.authProgress) return <Navigate to={"/Login"}/>
         return (
 
             <div className={styles.myProfile}>
@@ -32,14 +32,16 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 }
 
 type mapStateToPropsType = {
-    profile: UserProfileType | null
+    profile: UserProfileType | null,
+    authProgress: boolean | undefined
 }
 type mapDispatchToPropsType = {
     getProfileThunkCreator: (userId: number | null) => void
 }
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        authProgress: state.auth.isAutherized
     }
 }
 //оболочка для классовой компонеты

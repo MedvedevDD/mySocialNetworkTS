@@ -3,21 +3,18 @@ import {usersApi} from "../api/api";
 
 const SET_USER_DATA = "SET_USER_DATA"
 
-
 export type AuthStateType = {
-    id: number,
+    id: number|null,
     login: string,
     email: string,
     isAutherized?: boolean
 }
-const initialState: any = {
+const initialState: AuthStateType = {
     id: null,
-    login: null,
-    email: null,
+    login: "",
+    email: "",
     isAutherized: false
-
 }
-
 
 const authReducer = (state: AuthStateType = initialState, action: ActionTypes): AuthStateType => {
     switch (action.type) {
@@ -28,8 +25,6 @@ const authReducer = (state: AuthStateType = initialState, action: ActionTypes): 
                 ...action.data,
                 isAutherized: true
             }
-
-
         default:
             return state
     }

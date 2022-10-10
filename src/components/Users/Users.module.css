@@ -70,6 +70,13 @@
     padding: 20px;
 }
 
+.users_pages {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
 .users_pages ul {
     display: flex;
     justify-content: space-between;
@@ -135,4 +142,7 @@ ul .button {
     border: 2px solid gold;
     border-radius: 50px;
     cursor: pointer;
+}
+.btn_up:hover {
+    border: 4px solid gold;
 }
