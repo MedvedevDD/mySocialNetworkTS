@@ -28,7 +28,8 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
             addNewMessage()
         }
     }
-    if (!rest.authProgress) return <Navigate to={"/Login"}/>
+
+    // if (!rest.authProgress) return <Navigate to={"/Login"}/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

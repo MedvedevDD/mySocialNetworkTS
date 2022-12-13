@@ -20,6 +20,8 @@ import {
 } from "../../redux/users-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import {Preloader} from "../preloader/Preloader";
+import Dialogs from "../Dialogs/Dialogs";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
 
 export type UsersContainerPropsType = MapStateToPropsType & mapDispatchToPropsType
 
@@ -37,7 +39,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 
     render() {
-        if (!this.props.authProgress) return <Navigate to={"/Login"}/>
+        // if (!this.props.authProgress) return <Navigate to={"/Login"}/>
 
         return <>
             {this.props.isLoading ? <Preloader/> : null}
@@ -57,6 +59,12 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     }
 }
+
+// let AuthRedirectComponent = (props:any) => {
+//     if (!props.authProgress) return <Navigate to={"/Login"}/>
+//
+//     return <UsersContainer {...props}/>
+// }
 
 type MapStateToPropsType = {
     users: Array<UserType>,
@@ -129,8 +137,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //     }
 // }
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
     setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
     unfollowBtnThunkCreator, followBtnThunkCreator
-})(UsersContainer)
+})(UsersContainer))
