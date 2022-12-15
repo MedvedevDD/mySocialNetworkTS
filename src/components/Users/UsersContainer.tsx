@@ -22,6 +22,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {Preloader} from "../preloader/Preloader";
 import Dialogs from "../Dialogs/Dialogs";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 export type UsersContainerPropsType = MapStateToPropsType & mapDispatchToPropsType
 
@@ -74,7 +75,7 @@ type MapStateToPropsType = {
     firstPageOfPagination: number,
     isLoading: boolean,
     followingInProgress: Array<number>,
-    authProgress: any
+    // authProgress: any
 
 }
 export type mapDispatchToPropsType = {
@@ -103,7 +104,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
         firstPageOfPagination: state.usersPage.firstPageOfPagination,
         isLoading: state.usersPage.isLoading,
         followingInProgress: state.usersPage.followingInProgress,
-        authProgress: state.auth.isAutherized
+        // authProgress: state.auth.isAutherized
     }
 }
 
@@ -137,8 +138,15 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //     }
 // }
 
-export default withAuthRedirect(connect(mapStateToProps, {
+// export default withAuthRedirect(connect(mapStateToProps, {
+//     follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
+//     setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
+//     unfollowBtnThunkCreator, followBtnThunkCreator
+// })(UsersContainer))
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {
     follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
     setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
-    unfollowBtnThunkCreator, followBtnThunkCreator
-})(UsersContainer))
+    unfollowBtnThunkCreator, followBtnThunkCreator})
+)(UsersContainer)

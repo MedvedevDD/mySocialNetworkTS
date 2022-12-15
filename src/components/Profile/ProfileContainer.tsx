@@ -8,6 +8,7 @@ import {getProfileThunkCreator, ProfilePageType, setUserProfile, UserProfileType
 import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import {usersApi} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import { compose } from "redux";
 
 export type ProfilePropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -40,7 +41,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 type mapStateToPropsType = {
     profile: UserProfileType | null,
-    authProgress: boolean | undefined
+    // authProgress: boolean | undefined
 }
 type mapDispatchToPropsType = {
     getProfileThunkCreator: (userId: number | null) => void
@@ -48,7 +49,7 @@ type mapDispatchToPropsType = {
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
-        authProgress: state.auth.isAutherized
+        // authProgress: state.auth.isAutherized
     }
 }
 //оболочка для классовой компонеты
@@ -68,4 +69,11 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
     return ComponentWithRouterProp;
 }
 
-export default withAuthRedirect(connect(mapStateToProps, {getProfileThunkCreator})(withRouter(ProfileContainer)));
+// export const withAuthRedirect(connect(mapStateToProps, {getProfileThunkCreator})
+// (withRouter(ProfileContainer)));
+
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {getProfileThunkCreator}),
+    withRouter
+)(ProfileContainer);
