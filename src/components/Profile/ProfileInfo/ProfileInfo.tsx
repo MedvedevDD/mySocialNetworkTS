@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css';
 import userPhoto from "../../../assets/user.png"
 import {Preloader} from "../../preloader/Preloader";
 import {UserProfileType} from "../../../redux/profile-reducer";
+import ProfileStatus from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
@@ -16,10 +17,10 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 
     return (
         <div>
-            <div>
-                <img className={s.image}
-                     src='https://static3.depositphotos.com/1000454/256/i/600/depositphotos_2567474-stock-photo-wide-panorama-of-french-alps.jpg'/>
-            </div>
+            {/*<div>*/}
+            {/*    <img className={s.image}*/}
+            {/*         src='https://static3.depositphotos.com/1000454/256/i/600/depositphotos_2567474-stock-photo-wide-panorama-of-french-alps.jpg'/>*/}
+            {/*</div>*/}
 
             <div className={s.profileInfoBox}>
                 <div className={s.userPhotoLarge}>
@@ -28,6 +29,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 <div className={s.userFullName}>
                     {props.profile.fullName}
                 </div>
+                <ProfileStatus status={"Hello World"}/>
                 <div className={s.aboutMeBlock}>
                     <span className={s.aboutMeTitle}>Немного обо мне:</span>
 
