@@ -144,9 +144,10 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 //     unfollowBtnThunkCreator, followBtnThunkCreator
 // })(UsersContainer))
 export default compose<React.ComponentType>(
-    withAuthRedirect,
     connect(mapStateToProps, {
-    follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
-    setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
-    unfollowBtnThunkCreator, followBtnThunkCreator})
+        follow, unFollow, setUsers, setCurrentPage, setAmountOfUsers, setFirstPageOfPegination,
+        setUsersPerPage, setToggleIsLoading, toggleFollowingProgress, getUsersThunkCreator, setUsersPerPageThunkCreator,
+        unfollowBtnThunkCreator, followBtnThunkCreator
+    }),
+    withAuthRedirect,
 )(UsersContainer)

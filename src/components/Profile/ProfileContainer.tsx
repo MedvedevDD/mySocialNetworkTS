@@ -4,11 +4,11 @@ import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
-import {getProfileThunkCreator, ProfilePageType, setUserProfile, UserProfileType} from "../../redux/profile-reducer";
+import {getProfileThunkCreator, ProfilePageType, setUserProfileAC, UserProfileType} from "../../redux/profile-reducer";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import {usersApi} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
-import { compose } from "redux";
+import {compose} from "redux";
 
 export type ProfilePropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -41,6 +41,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 
 type mapStateToPropsType = {
     profile: UserProfileType | null,
+    profileStatus: string
     // authProgress: boolean | undefined
 }
 type mapDispatchToPropsType = {
@@ -49,6 +50,7 @@ type mapDispatchToPropsType = {
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
+        profileStatus: state.profilePage.profileStatus
         // authProgress: state.auth.isAutherized
     }
 }
@@ -73,7 +75,7 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 // (withRouter(ProfileContainer)));
 
 export default compose<React.ComponentType>(
-    withAuthRedirect,
     connect(mapStateToProps, {getProfileThunkCreator}),
-    withRouter
+    withRouter,
+    withAuthRedirect,
 )(ProfileContainer);

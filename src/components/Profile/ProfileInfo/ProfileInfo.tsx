@@ -1,18 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from './ProfileInfo.module.css';
 import userPhoto from "../../../assets/user.png"
 import {Preloader} from "../../preloader/Preloader";
-import {UserProfileType} from "../../../redux/profile-reducer";
+import {getProfileStatusThunkCreator, UserProfileType} from "../../../redux/profile-reducer";
 import ProfileStatus from "./ProfileStatus";
+import {useDispatch} from "react-redux";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
+    profileStatus: string
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
+    const dispatch = useDispatch()
+    useEffect(()=>{props.profile && dispatch(getProfileStatusThunkCreator(props.profile.userId))}, [])
     if (!props.profile) {
         return <Preloader/>
     }
+
 
 
     return (
@@ -29,7 +34,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 <div className={s.userFullName}>
                     {props.profile.fullName}
                 </div>
-                <ProfileStatus status={"Hello World"}/>
+                <ProfileStatus status={props.profileStatus + '4 test'}/>
                 <div className={s.aboutMeBlock}>
                     <span className={s.aboutMeTitle}>Немного обо мне:</span>
 

@@ -1,5 +1,10 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
-import profileReducer, {addPostAC, newPostTextChangeAC, setUserProfile} from "./profile-reducer";
+import profileReducer, {
+    addPostAC,
+    newPostTextChangeAC,
+    setUserProfileAC,
+    setUserProfileStatusAC
+} from "./profile-reducer";
 import dialogsReducer, {addMessageAC} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer, {
@@ -70,9 +75,10 @@ export type ActionTypes =
     | ReturnType<typeof setFirstPageOfPegination>
     | ReturnType<typeof setUsersPerPage>
     | ReturnType<typeof setToggleIsLoading>
-    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setUserData>
     | ReturnType<typeof toggleFollowingProgress>
+    | ReturnType<typeof setUserProfileStatusAC>
 
 //@ts-ignore
 window.store = store
