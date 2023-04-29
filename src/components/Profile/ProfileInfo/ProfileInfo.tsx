@@ -1,8 +1,12 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import s from './ProfileInfo.module.css';
 import userPhoto from "../../../assets/user.png"
 import {Preloader} from "../../preloader/Preloader";
-import {getProfileStatusThunkCreator, UserProfileType} from "../../../redux/profile-reducer";
+import {
+    changeUserProfileStatusThunkCreator,
+    getProfileStatusThunkCreator,
+    UserProfileType
+} from "../../../redux/profile-reducer";
 import ProfileStatus from "./ProfileStatus";
 import {useDispatch} from "react-redux";
 
@@ -13,11 +17,16 @@ type ProfileInfoPropsType = {
 
 function ProfileInfo(props: ProfileInfoPropsType) {
     const dispatch = useDispatch()
-    useEffect(()=>{props.profile && dispatch(getProfileStatusThunkCreator(props.profile.userId))}, [])
+    const changeStatus = useCallback((newStatus: string) => {
+        dispatch(changeUserProfileStatusThunkCreator(newStatus))
+    }, [dispatch])
+    // useEffect(() => {
+    //     // debugger
+    //     props.profile && dispatch(getProfileStatusThunkCreator(props.profile.userId))
+    // }, [])
     if (!props.profile) {
         return <Preloader/>
     }
-
 
 
     return (
@@ -34,7 +43,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 <div className={s.userFullName}>
                     {props.profile.fullName}
                 </div>
-                <ProfileStatus status={props.profileStatus + '4 test'}/>
+                <ProfileStatus status={props.profileStatus} changeStatus={changeStatus}/>
                 <div className={s.aboutMeBlock}>
                     <span className={s.aboutMeTitle}>Немного обо мне:</span>
 
@@ -42,28 +51,28 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 </div>
                 <div className={s.userLinkBox}>
                     <div>facebook:
-                        <a href= {(props.profile.contacts.facebook)? props.profile.contacts.facebook : undefined}>{props.profile.contacts.facebook}</a>
+                        <a href={(props.profile.contacts.facebook) ? props.profile.contacts.facebook : undefined}>{props.profile.contacts.facebook}</a>
                     </div>
                     <div>website:
-                        <a href= {(props.profile.contacts.website)? props.profile.contacts.website : undefined}>{props.profile.contacts.website}</a>
+                        <a href={(props.profile.contacts.website) ? props.profile.contacts.website : undefined}>{props.profile.contacts.website}</a>
                     </div>
                     <div>vk:
-                        <a href= {(props.profile.contacts.vk)? props.profile.contacts.vk : undefined}>{props.profile.contacts.vk}</a>
+                        <a href={(props.profile.contacts.vk) ? props.profile.contacts.vk : undefined}>{props.profile.contacts.vk}</a>
                     </div>
                     <div>twitter:
-                    <a href= {(props.profile.contacts.twitter)? props.profile.contacts.twitter : undefined}>{props.profile.contacts.twitter}</a>
+                        <a href={(props.profile.contacts.twitter) ? props.profile.contacts.twitter : undefined}>{props.profile.contacts.twitter}</a>
                     </div>
                     <div>instagram:
-                    <a href= {(props.profile.contacts.instagram)? props.profile.contacts.instagram : undefined}>{props.profile.contacts.instagram}</a>
+                        <a href={(props.profile.contacts.instagram) ? props.profile.contacts.instagram : undefined}>{props.profile.contacts.instagram}</a>
                     </div>
                     <div>youtube:
-                    <a href= {(props.profile.contacts.youtube)? props.profile.contacts.youtube : undefined}>{props.profile.contacts.youtube}</a>
+                        <a href={(props.profile.contacts.youtube) ? props.profile.contacts.youtube : undefined}>{props.profile.contacts.youtube}</a>
                     </div>
                     <div>github:
-                    <a href= {(props.profile.contacts.github)? props.profile.contacts.github : undefined}>{props.profile.contacts.github}</a>
+                        <a href={(props.profile.contacts.github) ? props.profile.contacts.github : undefined}>{props.profile.contacts.github}</a>
                     </div>
                     <div>mainLink:
-                    <a href= {(props.profile.contacts.mainLink)? props.profile.contacts.mainLink : undefined}>{props.profile.contacts.mainLink}</a>
+                        <a href={(props.profile.contacts.mainLink) ? props.profile.contacts.mainLink : undefined}>{props.profile.contacts.mainLink}</a>
                     </div>
                 </div>
                 <div>

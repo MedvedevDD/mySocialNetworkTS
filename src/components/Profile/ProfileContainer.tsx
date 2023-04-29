@@ -4,7 +4,7 @@ import Profile from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
-import {getProfileThunkCreator, ProfilePageType, setUserProfileAC, UserProfileType} from "../../redux/profile-reducer";
+import {getProfileStatusThunkCreator, getProfileThunkCreator, ProfilePageType, setUserProfileAC, UserProfileType} from "../../redux/profile-reducer";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import {usersApi} from "../../api/api";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
@@ -18,6 +18,7 @@ class ProfileContainer extends React.Component<ProfilePropsType> {
 //@ts-ignore
         let userId = this.props.router.params.userId
         this.props.getProfileThunkCreator(userId)
+        this.props.getProfileStatusThunkCreator(userId)
     }
 
 
@@ -46,6 +47,7 @@ type mapStateToPropsType = {
 }
 type mapDispatchToPropsType = {
     getProfileThunkCreator: (userId: number | null) => void
+    getProfileStatusThunkCreator: (userId: number | null) => void
 }
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
@@ -75,7 +77,7 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 // (withRouter(ProfileContainer)));
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator}),
+    connect(mapStateToProps, {getProfileThunkCreator, getProfileStatusThunkCreator}),
     withRouter,
     withAuthRedirect,
 )(ProfileContainer);

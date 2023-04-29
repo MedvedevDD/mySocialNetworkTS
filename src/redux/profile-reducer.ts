@@ -6,6 +6,7 @@ const ADD_POST = "ADD-POST"
 const NEW_POST_TEXT_CHANGE = "NEW-POST-TEXT-CHANGE"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_USER_PROFILE_STATUS = "SET_USER_PROFILE_STATUS"
+//const CHANGE_USER_PROFILE_STATUS = "CHANGE_USER_PROFILE_STATUS"
 
 export type PostType = {
     id: number
@@ -72,7 +73,9 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
         case SET_USER_PROFILE_STATUS:
-            return {...state, profileStatus: action.status}
+            //CHANGE_USER_PROFILE_STATUS:
+                return {...state, profileStatus: action.status};
+
         default:
             return state
     }
@@ -80,13 +83,21 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
 export const addPostAC = () => ({type: ADD_POST} as const)
 export const newPostTextChangeAC = (newText: string) => ({type: NEW_POST_TEXT_CHANGE, newText: newText} as const)
 export const setUserProfileAC = (profile: UserProfileType | null) => ({type: SET_USER_PROFILE, profile} as const)
-export const setUserProfileStatusAC = (status: string) => ({type: SET_USER_PROFILE_STATUS, status} as const )
+export const setUserProfileStatusAC = (status: string) => ({type: SET_USER_PROFILE_STATUS, status} as const)
+// export const changeUserProfileStatusAC = (status: string) => ({type: CHANGE_USER_PROFILE_STATUS, status} as const)
 export const getProfileThunkCreator = (uId: number) => {
 
     return (dispatch: Dispatch) => {
         usersApi.getMyProfileData(uId)
             .then(response => {
                 dispatch(setUserProfileAC(response.data))
+            })
+            .then(response => {
+                usersApi.getMyProfileStatus(uId)
+                    .then(res => {
+                        // debugger
+                        dispatch(setUserProfileStatusAC(res.data))
+                    })
             })
     }
 }
@@ -99,5 +110,10 @@ export const getProfileStatusThunkCreator = (uId: number) => (dispatch: Dispatch
             dispatch(setUserProfileStatusAC(res.statusText))
         })
 }
-
+export const changeUserProfileStatusThunkCreator = (status: string) => (dispatch: Dispatch) => {
+    usersApi.changeMyProfileStatus(status)
+        .then(res => {
+            dispatch(setUserProfileStatusAC(status))
+        })
+}
 export default profileReducer

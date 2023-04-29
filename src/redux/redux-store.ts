@@ -1,6 +1,6 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
 import profileReducer, {
-    addPostAC,
+    addPostAC, changeUserProfileStatusThunkCreator,
     newPostTextChangeAC,
     setUserProfileAC,
     setUserProfileStatusAC
@@ -79,6 +79,7 @@ export type ActionTypes =
     | ReturnType<typeof setUserData>
     | ReturnType<typeof toggleFollowingProgress>
     | ReturnType<typeof setUserProfileStatusAC>
+    // | ReturnType<typeof changeUserProfileStatusAC>
 
 //@ts-ignore
 window.store = store

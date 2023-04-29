@@ -46,6 +46,9 @@ export const usersApi = {
     getMyProfileStatus(userId: number) {
         return instance.get(`profile/status/` + userId)
     },
+    changeMyProfileStatus(status:string){
+        return instance.put('profile/status', {status})
+    },
     unfollowButton(uId: number) {
         return instance.delete(`follow/${uId}`)
     },
