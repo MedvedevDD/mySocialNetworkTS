@@ -8,8 +8,18 @@ const instance = axios.create({
     }
 
 })
-
+export type loginDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 export const usersApi = {
+    login(formData: loginDataType) {
+        return instance.post('auth/login', formData)
+    },
+    logout() {
+        return instance.delete('auth/login')
+    },
     getUsers(usersPerPage: number, p: number) {
         return instance.get(`users?page=${p}&count=${usersPerPage}`)
             .then(response => {
@@ -46,7 +56,7 @@ export const usersApi = {
     getMyProfileStatus(userId: number) {
         return instance.get(`profile/status/` + userId)
     },
-    changeMyProfileStatus(status:string){
+    changeMyProfileStatus(status: string) {
         return instance.put('profile/status', {status})
     },
     unfollowButton(uId: number) {

@@ -10,7 +10,7 @@ import {ProfilePropsType} from "./ProfileContainer";
 function Profile(props:ProfilePropsType) {
     return (
         <div className={styles.myProfile}>
-            <ProfileInfo profile={props.profile} profileStatus = {props.profileStatus}/>
+            <ProfileInfo profile={props.profile} profileStatus = {props.profileStatus} />
             <MyPostsContainer/>
         </div>
     )

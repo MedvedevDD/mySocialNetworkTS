@@ -4,6 +4,7 @@ import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
 import {Navigate} from "react-router-dom";
+import {Field, reduxForm} from "redux-form";
 
 
 const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
@@ -14,20 +15,24 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
 
     //let newMessageRef = React.createRef<HTMLTextAreaElement>()
 
-    const [newMessage, setNewMessage] = useState<string>("")
+    // const [newMessage, setNewMessage] = useState<string>("")
+    //
+    // const onNewMessageTextHandlder = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    //     setNewMessage(e.currentTarget.value)
+    // }
+    // const addNewMessage = () => {
+    //     newMessage.trim() != "" && rest.addNewMessage(newMessage)
+    //     setNewMessage("")
+    // }
 
-    const onNewMessageTextHandlder = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setNewMessage(e.currentTarget.value)
+    const onSubmit = (formData:any) => {
+        rest.addNewMessage(formData.newMessageBody)
     }
-    const addNewMessage = () => {
-        newMessage.trim() != "" && rest.addNewMessage(newMessage)
-        setNewMessage("")
-    }
-    const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            addNewMessage()
-        }
-    }
+    // const onEnterKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    //     if (e.key === "Enter") {
+    //         addNewMessage()
+    //     }
+    // }
 
     // if (!rest.authProgress) return <Navigate to={"/Login"}/>
     return (
@@ -35,14 +40,29 @@ const Dialogs = ({dialogsPage, ...rest}: DialogsPropsType) => {
             <div className={s.dialogsItems}>
                 {dialogsElement}
             </div>
+
             <div className={s.messages}>
                 {messageElement}
-                <textarea onKeyPress={onEnterKeyPress} onChange={onNewMessageTextHandlder} value={newMessage}
-                          placeholder={"TypeIn your message here"}/>
-                <button onClick={addNewMessage}>Add Message</button>
+            {/*    <textarea onKeyPress={onEnterKeyPress} onChange={onNewMessageTextHandlder} value={newMessage}*/}
+            {/*              placeholder={"TypeIn your message here"}/>*/}
+            {/*    <button onClick={addNewMessage}>Add Message</button>*/}
+                <AddMessageFormRedux onSubmit={onSubmit}/>
             </div>
         </div>
 
     )
 }
+const AddMessageForm = (props: any) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className={s.messages}>
+                <Field  name={'newMessageBody'} component={'textarea'} placeholder="TypeIn your message here"/>
+                <button>Add Message</button>
+            </div>
+        </form>
+    )
+}
+const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
+
+
 export default Dialogs;

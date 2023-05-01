@@ -57,7 +57,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
         case ADD_POST:
             const newPost: PostType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.post,
                 likeCounts: 0
             }
             return {
@@ -80,7 +80,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
             return state
     }
 }
-export const addPostAC = () => ({type: ADD_POST} as const)
+export const addPostAC = (post:string) => ({type: ADD_POST, post} as const)
 export const newPostTextChangeAC = (newText: string) => ({type: NEW_POST_TEXT_CHANGE, newText: newText} as const)
 export const setUserProfileAC = (profile: UserProfileType | null) => ({type: SET_USER_PROFILE, profile} as const)
 export const setUserProfileStatusAC = (status: string) => ({type: SET_USER_PROFILE_STATUS, status} as const)

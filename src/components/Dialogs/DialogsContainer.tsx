@@ -5,7 +5,6 @@ import Dialogs from './Dialogs';
 import {connect, useDispatch} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {compose, Dispatch} from 'redux';
-import {Navigate} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 
 
