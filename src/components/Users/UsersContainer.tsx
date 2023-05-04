@@ -19,7 +19,7 @@ import {
     followBtnThunkCreator
 } from "../../redux/users-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
-import {Preloader} from "../preloader/Preloader";
+import {Preloader} from "../common/preloader/Preloader";
 import Dialogs from "../Dialogs/Dialogs";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {compose} from "redux";

@@ -1,5 +1,5 @@
 import {ActionTypes} from "./redux-store";
-import {loginDataType, usersApi} from "../api/api";
+import {authApi, loginDataType, userProfileApi} from "../api/api";
 import {Dispatch} from "redux";
 
 const SET_USER_DATA = "SET_USER_DATA"
@@ -41,10 +41,10 @@ const authReducer = (state: AuthStateType = initialState, action: ActionTypes): 
 
 }
 export const loginTC = (formData: loginDataType) => (dispatch: Dispatch) => {
-    usersApi.login(formData)
+    authApi.login(formData)
         .then(response => {
             if (response.data.resultCode === 0) {
-                usersApi.getMyAuthData()
+                authApi.getMyAuthData()
                     .then(response => {
                         if (response.resultCode === 0) {
                             let {id, login, email} = response.data
@@ -55,7 +55,7 @@ export const loginTC = (formData: loginDataType) => (dispatch: Dispatch) => {
         })
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
-    usersApi.logout()
+    authApi.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(delUserLoginData())}})
@@ -67,7 +67,7 @@ export const setUserData = ({id, login, email}: AuthStateType) => ({
 export const delUserLoginData = () => ({type: DEL_USER_DATA} as const)
 
 export const getMyAuthDataThunkCreator = () => (dispatch: Dispatch) => {
-    usersApi.getMyAuthData()
+    authApi.getMyAuthData()
         .then(response => {
             if (response.resultCode === 0) {
                 let {id, login, email} = response.data

@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect} from "react";
 import s from './ProfileInfo.module.css';
 import userPhoto from "../../../assets/user.png"
-import {Preloader} from "../../preloader/Preloader";
+import {Preloader} from "../../common/preloader/Preloader";
 import {
     changeUserProfileStatusThunkCreator,
-    getProfileStatusThunkCreator,
+    //getProfileStatusThunkCreator,
     UserProfileType
 } from "../../../redux/profile-reducer";
 import ProfileStatus from "./ProfileStatus";
@@ -77,7 +77,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                 </div>
                 <div>
                     <span>Ищу работу</span>
-                    <input type={"checkbox"} checked={props.profile.lookingForAJob}/>
+                    <input type={"checkbox"} onChange={alert} checked={props.profile.lookingForAJob}/>
                     <span>{props.profile.lookingForAJobDescription}</span>
                 </div>
             </div>

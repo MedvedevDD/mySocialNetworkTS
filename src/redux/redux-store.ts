@@ -1,7 +1,6 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
 import profileReducer, {
     addPostAC, changeUserProfileStatusThunkCreator,
-    newPostTextChangeAC,
     setUserProfileAC,
     setUserProfileStatusAC
 } from "./profile-reducer";
@@ -67,7 +66,6 @@ type StateType = {
 }*/
 export type ActionTypes =
     ReturnType<typeof addPostAC>
-    | ReturnType<typeof newPostTextChangeAC>
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof follow>
     | ReturnType<typeof unFollow>

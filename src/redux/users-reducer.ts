@@ -1,6 +1,6 @@
 import {ActionTypes} from "./redux-store";
 import {mapDispatchToPropsType} from "../components/Users/UsersContainer";
-import {usersApi} from "../api/api";
+import {userProfileApi} from "../api/api";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -117,7 +117,7 @@ export const getUsersThunkCreator = (usersPerPage: number, currentUsersPage: num
     return (dispatch: any) => {
         dispatch(setToggleIsLoading(true))
         dispatch(setCurrentPage(currentUsersPage))
-        usersApi.getUsers(usersPerPage, currentUsersPage).then((response) => {
+        userProfileApi.getUsers(usersPerPage, currentUsersPage).then((response) => {
             dispatch(setToggleIsLoading(false))
             dispatch(setUsers(response.items))
             dispatch(setAmountOfUsers(response.totalCount))
@@ -131,7 +131,7 @@ export const setUsersPerPageThunkCreator = (e: number, currentPage: number) => {
         dispatch(setUsersPerPage(e))
         dispatch(setCurrentPage(1))
         dispatch(setFirstPageOfPegination(1))
-        usersApi.getUsersPerPage(currentPage, e)
+        userProfileApi.getUsersPerPage(currentPage, e)
             .then(response => {
                 dispatch(setToggleIsLoading(false))
                 dispatch(setUsers(response.items))
@@ -142,7 +142,7 @@ export const setUsersPerPageThunkCreator = (e: number, currentPage: number) => {
 export const unfollowBtnThunkCreator = (uId:number) => {
     return (dispatch:any) => {
         dispatch(toggleFollowingProgress(uId, true))
-        usersApi.unfollowButton(uId)
+        userProfileApi.unfollowButton(uId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                    dispatch(unFollow(uId))
@@ -154,7 +154,7 @@ export const unfollowBtnThunkCreator = (uId:number) => {
 export const followBtnThunkCreator = (uId:number) => {
     return (dispatch:any) => {
         dispatch(toggleFollowingProgress(uId, true))
-        usersApi.followButton(uId)
+        userProfileApi.followButton(uId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(follow(uId))

@@ -1,19 +1,14 @@
-import React, {JSXElementConstructor, useCallback} from "react";
+import React, {JSXElementConstructor} from "react";
 import styles from "../Profile/Profile.module.css";
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootStateType} from "../../redux/redux-store";
 import {
-    changeUserProfileStatusThunkCreator,
-    getProfileStatusThunkCreator,
+    //getProfileStatusThunkCreator,
     getProfileThunkCreator,
-    ProfilePageType,
-    setUserProfileAC,
     UserProfileType
 } from "../../redux/profile-reducer";
-import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
-import {usersApi} from "../../api/api";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
 import {compose} from "redux";
 
@@ -30,7 +25,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 //@ts-ignore
         let userId = this.props.router.params.userId
         this.props.getProfileThunkCreator(userId)
-        this.props.getProfileStatusThunkCreator(userId)
+        //this.props.getProfileStatusThunkCreator(userId)
     }
 
 
@@ -40,7 +35,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         return (
 
             <div className={styles.myProfile}>
-                <Profile  profile={this.props.profile} profileStatus={this.props.profileStatus}
+                <Profile profile={this.props.profile} profileStatus={this.props.profileStatus}
 
                 />
             </div>
@@ -92,8 +87,10 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 // (withRouter(ProfileContainer)));
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator,
-        getProfileStatusThunkCreator}),
+    connect(mapStateToProps, {
+        getProfileThunkCreator,
+        //getProfileStatusThunkCreator
+    }),
     withRouter,
     withAuthRedirect,
 )(ProfileContainer);

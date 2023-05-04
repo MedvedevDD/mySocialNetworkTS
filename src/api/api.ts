@@ -13,13 +13,33 @@ export type loginDataType = {
     password: string
     rememberMe: boolean
 }
-export const usersApi = {
+export const authApi  =  {
     login(formData: loginDataType) {
         return instance.post('auth/login', formData)
     },
     logout() {
         return instance.delete('auth/login')
     },
+    getMyAuthData() {
+        return instance.get(`auth/me`)
+            .then(response => {
+                return response.data
+            })
+    },
+}
+export const profileApi = {
+    getMyProfileData(userId: number) {
+        return instance.get(`profile/` + userId)
+    },
+    getMyProfileStatus(userId: number) {
+        return instance.get(`profile/status/` + userId)
+    },
+    changeMyProfileStatus(status: string) {
+        return instance.put('profile/status', {status})
+    },
+}
+export const userProfileApi = {
+
     getUsers(usersPerPage: number, p: number) {
         return instance.get(`users?page=${p}&count=${usersPerPage}`)
             .then(response => {
@@ -44,21 +64,8 @@ export const usersApi = {
                 return response.data
             })
     },
-    getMyAuthData() {
-        return instance.get(`auth/me`)
-            .then(response => {
-                return response.data
-            })
-    },
-    getMyProfileData(userId: number) {
-        return instance.get(`profile/` + userId)
-    },
-    getMyProfileStatus(userId: number) {
-        return instance.get(`profile/status/` + userId)
-    },
-    changeMyProfileStatus(status: string) {
-        return instance.put('profile/status', {status})
-    },
+
+
     unfollowButton(uId: number) {
         return instance.delete(`follow/${uId}`)
     },

@@ -1,9 +1,8 @@
 import {ActionTypes} from "./redux-store";
-import {usersApi} from "../api/api";
+import {profileApi} from "../api/api";
 import {Dispatch} from "redux";
 
 const ADD_POST = "ADD-POST"
-const NEW_POST_TEXT_CHANGE = "NEW-POST-TEXT-CHANGE"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_USER_PROFILE_STATUS = "SET_USER_PROFILE_STATUS"
 //const CHANGE_USER_PROFILE_STATUS = "CHANGE_USER_PROFILE_STATUS"
@@ -14,7 +13,6 @@ export type PostType = {
     likeCounts: number
 }
 export type ProfilePageType = {
-    newPostText: string
     posts: Array<PostType>
     profile: UserProfileType | null
     profileStatus: string
@@ -43,7 +41,6 @@ export type UserProfileType = {
 }
 
 const initialState: ProfilePageType = {
-    newPostText: "",
     posts: [
         {id: 1, message: "Hello", likeCounts: 10},
         {id: 2, message: "How are you", likeCounts: 15}
@@ -62,18 +59,12 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ""
+                posts: [...state.posts, newPost]
             };
-        case NEW_POST_TEXT_CHANGE:
-            return {
-                ...state,
-                newPostText: action.newText
-            };
+
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
         case SET_USER_PROFILE_STATUS:
-            //CHANGE_USER_PROFILE_STATUS:
                 return {...state, profileStatus: action.status};
 
         default:
@@ -81,19 +72,18 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
     }
 }
 export const addPostAC = (post:string) => ({type: ADD_POST, post} as const)
-export const newPostTextChangeAC = (newText: string) => ({type: NEW_POST_TEXT_CHANGE, newText: newText} as const)
 export const setUserProfileAC = (profile: UserProfileType | null) => ({type: SET_USER_PROFILE, profile} as const)
 export const setUserProfileStatusAC = (status: string) => ({type: SET_USER_PROFILE_STATUS, status} as const)
 // export const changeUserProfileStatusAC = (status: string) => ({type: CHANGE_USER_PROFILE_STATUS, status} as const)
 export const getProfileThunkCreator = (uId: number) => {
 
     return (dispatch: Dispatch) => {
-        usersApi.getMyProfileData(uId)
+        profileApi.getMyProfileData(uId)
             .then(response => {
                 dispatch(setUserProfileAC(response.data))
             })
             .then(response => {
-                usersApi.getMyProfileStatus(uId)
+                profileApi.getMyProfileStatus(uId)
                     .then(res => {
                         // debugger
                         dispatch(setUserProfileStatusAC(res.data))
@@ -102,16 +92,16 @@ export const getProfileThunkCreator = (uId: number) => {
     }
 }
 
-export const getProfileStatusThunkCreator = (uId: number) => (dispatch: Dispatch) => {
-    //debugger
-    usersApi.getMyProfileStatus(uId)
-        .then(res => {
-            //debugger
-            dispatch(setUserProfileStatusAC(res.statusText))
-        })
-}
+// export const getProfileStatusThunkCreator = (uId: number) => (dispatch: Dispatch) => {
+//     //debugger
+//     profileApi.getMyProfileStatus(uId)
+//         .then(res => {
+//             //debugger
+//             dispatch(setUserProfileStatusAC(res.statusText))
+//         })
+// }
 export const changeUserProfileStatusThunkCreator = (status: string) => (dispatch: Dispatch) => {
-    usersApi.changeMyProfileStatus(status)
+    profileApi.changeMyProfileStatus(status)
         .then(res => {
             dispatch(setUserProfileStatusAC(status))
         })

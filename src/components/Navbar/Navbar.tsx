@@ -1,17 +1,23 @@
 import React from "react";
 import s from './Navbar.module.css';
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink, useParams} from "react-router-dom";
 import { MyFriendsContainer } from "./MyFriendsContainer";
 import store from "../../redux/redux-store";
 
 
 
 function Navbar() {
+    const params = useParams()
+const toUsersProfile = () => {
 
+    <Navigate to={`/profile/${store.getState().auth.id}`} />
+}
     return (
         <nav className={s.nav}>
             <div>
                 <div className={s.item}>
+                    {/*<button onClick={toUsersProfile}>Profile</button>*/}
+
                     <NavLink to={"/profile/"+ store.getState().auth.id}
                              className={({isActive}) => (isActive ? s.active : 'inactive')}
                     >Profile</NavLink>
