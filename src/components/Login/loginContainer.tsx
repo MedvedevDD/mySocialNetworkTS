@@ -10,7 +10,7 @@ type mapDispatchToPropsType = {}
 type LoginContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
-        isAuth: state.auth.isAutherized,
+        isAuth: state.auth.isAuth,
         id: state.auth.id
     }
 }

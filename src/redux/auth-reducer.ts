@@ -3,19 +3,18 @@ import {authApi, loginDataType, userProfileApi} from "../api/api";
 import {Dispatch} from "redux";
 
 const SET_USER_DATA = "SET_USER_DATA"
-const DEL_USER_DATA = "DEL_USER_DATA"
 
 export type AuthStateType = {
     id: number | null,
     login: string,
     email: string,
-    isAutherized?: boolean
+    isAuth?: boolean
 }
 const initialState: AuthStateType = {
     id: null,
     login: "",
     email: "",
-    isAutherized: false
+    isAuth: false
 }
 
 const authReducer = (state: AuthStateType = initialState, action: ActionTypes): AuthStateType => {
@@ -24,17 +23,9 @@ const authReducer = (state: AuthStateType = initialState, action: ActionTypes): 
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAutherized: true
+                ...action.payload
             };
-        case DEL_USER_DATA:
-            return {
-                ...state,
-                id: null,
-                login: "",
-                email: "",
-                isAutherized: false
-            }
+
         default:
             return state
     }
@@ -44,34 +35,36 @@ export const loginTC = (formData: loginDataType) => (dispatch: Dispatch) => {
     authApi.login(formData)
         .then(response => {
             if (response.data.resultCode === 0) {
-                authApi.getMyAuthData()
-                    .then(response => {
-                        if (response.resultCode === 0) {
-                            let {id, login, email} = response.data
-                            dispatch(setUserData({id, login, email}))
-                        }
-                    })
+                // @ts-ignore
+                dispatch(getMyAuthDataThunkCreator())
+                // authApi.getMyAuthData()
+                //     .then(response => {
+                //         if (response.resultCode === 0) {
+                //             let {id, login, email} = response.data
+                //             dispatch(setUserData({id, login, email}))
+                //         }
+                //     })
             }
         })
 }
+export const setUserData = ({id, login, email, isAuth}: AuthStateType) => ({
+    type: SET_USER_DATA, payload: {id, login, email, isAuth: isAuth}
+} as const)
 export const logOutTC = () => (dispatch: Dispatch) => {
     authApi.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(delUserLoginData())}})
-
+                //dispatch(delUserLoginData())}})
+                dispatch(setUserData({id: null, login: '', email: '', isAuth:false}))}})
 }
-export const setUserData = ({id, login, email}: AuthStateType) => ({
-    type: SET_USER_DATA, data: {id, login, email}
-} as const)
-export const delUserLoginData = () => ({type: DEL_USER_DATA} as const)
+
 
 export const getMyAuthDataThunkCreator = () => (dispatch: Dispatch) => {
     authApi.getMyAuthData()
         .then(response => {
             if (response.resultCode === 0) {
                 let {id, login, email} = response.data
-                dispatch(setUserData({id, login, email}))
+                dispatch(setUserData({id, login, email, isAuth:true}))
             }
         })
 

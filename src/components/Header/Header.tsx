@@ -19,7 +19,7 @@ function Header(props: HeaderPropsType) {
                 <img src='https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg'/>
             </div>
             <div className={s.loginBlock}>
-                {props.auth.isAutherized
+                {props.auth.isAuth
                     ? "Привет, " + props.auth.login
                     : <NavLink className={s.loginTitle} to="/Login/*">Login</NavLink>
                 }
