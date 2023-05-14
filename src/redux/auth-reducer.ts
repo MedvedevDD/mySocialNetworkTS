@@ -8,13 +8,15 @@ export type AuthStateType = {
     id: number | null,
     login: string,
     email: string,
-    isAuth?: boolean
+    isAuth?: boolean,
+    errorMessage?: string
 }
 const initialState: AuthStateType = {
     id: null,
     login: "",
     email: "",
-    isAuth: false
+    isAuth: false,
+    errorMessage: ''
 }
 
 const authReducer = (state: AuthStateType = initialState, action: ActionTypes): AuthStateType => {
@@ -23,20 +25,22 @@ const authReducer = (state: AuthStateType = initialState, action: ActionTypes): 
         case SET_USER_DATA:
             return {
                 ...state,
+                // @ts-ignore
                 ...action.payload
             };
-
         default:
             return state
     }
 
 }
+
 export const loginTC = (formData: loginDataType) => (dispatch: Dispatch) => {
     authApi.login(formData)
         .then(response => {
             if (response.data.resultCode === 0) {
                 // @ts-ignore
                 dispatch(getMyAuthDataThunkCreator())
+
                 // authApi.getMyAuthData()
                 //     .then(response => {
                 //         if (response.resultCode === 0) {
@@ -55,7 +59,9 @@ export const logOutTC = () => (dispatch: Dispatch) => {
         .then(res => {
             if (res.data.resultCode === 0) {
                 //dispatch(delUserLoginData())}})
-                dispatch(setUserData({id: null, login: '', email: '', isAuth:false}))}})
+                dispatch(setUserData({id: null, login: '', email: '', isAuth: false}))
+            }
+        })
 }
 
 
@@ -64,7 +70,7 @@ export const getMyAuthDataThunkCreator = () => (dispatch: Dispatch) => {
         .then(response => {
             if (response.resultCode === 0) {
                 let {id, login, email} = response.data
-                dispatch(setUserData({id, login, email, isAuth:true}))
+                dispatch(setUserData({id, login, email, isAuth: true}))
             }
         })
 

@@ -1,22 +1,24 @@
 import React from "react";
 import s from "./login.module.css"
 import {Field, reduxForm} from "redux-form";
-import {loginTC} from "../../redux/auth-reducer";
+// import {loginTC} from "../../redux/auth-reducer";
 import { useDispatch } from "react-redux";
 import {minLengthCreator, requiredField} from "../../utils/validators/validators";
 import {Input} from "../common/FormsControls/FormsControls";
+import {loginDataType} from "../../api/api";
 
 const minPasswordLength = minLengthCreator(8)
+
 const LoginForm = (props:any) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'Login'} name={'email'} component={Input}
+                <Field placeholder={'Email'} name={'email'} component={Input}
                        validate={[requiredField]}/>
             </div>
             <div>
-                <Field placeholder={'Pass'} name={'password'} component={Input} type={'password'}
+                <Field placeholder={'Password'} name={'password'} component={Input} type={'password'}
                        validate={[requiredField, minPasswordLength]}/>
             </div>
             <div>
@@ -29,15 +31,18 @@ const LoginForm = (props:any) => {
     )
 }
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
-const Login = () => {
-    const dispatch = useDispatch()
-    const onSubmit = (formData:any) => {
-        dispatch(loginTC(formData))
+
+const Login = (props: any) => {
+    //const dispatch = useDispatch()
+    const onSubmit = (formData: loginDataType) => {
+        props.loginTC(formData)
+        console.log(props.loginTC(formData))
     }
     return <>
         <div className={s.login}>
             <h1>LOGIN PLEASE</h1>
         </div>
+        {/*//@ts-ignore*/}
         <LoginReduxForm onSubmit={onSubmit}/>
     </>
 }

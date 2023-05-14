@@ -38,7 +38,7 @@ export const profileApi = {
         return instance.put('profile/status', {status})
     },
 }
-export const userProfileApi = {
+export const userProfileApi  = {
 
     getUsers(usersPerPage: number, p: number) {
         return instance.get(`users?page=${p}&count=${usersPerPage}`)
