@@ -1,15 +1,17 @@
 import React from "react";
 import s from "./login.module.css"
-import {Field, reduxForm} from "redux-form";
+import formStyleError from "./../common/FormsControls/FormsControls.module.css"
+
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 // import {loginTC} from "../../redux/auth-reducer";
 import { useDispatch } from "react-redux";
 import {minLengthCreator, requiredField} from "../../utils/validators/validators";
 import {Input} from "../common/FormsControls/FormsControls";
-import {loginDataType} from "../../api/api";
+import {FormDataType} from "../../api/api";
 
 const minPasswordLength = minLengthCreator(8)
 
-const LoginForm = (props:any) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props:any) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
@@ -24,25 +26,27 @@ const LoginForm = (props:any) => {
             <div>
                 <Field type={'checkbox'} name={'rememberMe'} component={Input}/> remember me
             </div>
+            { props.error && <div className={formStyleError.formSummaryError}>
+                {props.error}
+            </div>
+            }
             <div>
                 <button>Login</button>
             </div>
         </form>
     )
 }
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
+const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 const Login = (props: any) => {
     //const dispatch = useDispatch()
-    const onSubmit = (formData: loginDataType) => {
+    const onSubmit = (formData: FormDataType) => {
         props.loginTC(formData)
-        console.log(props.loginTC(formData))
     }
     return <>
         <div className={s.login}>
             <h1>LOGIN PLEASE</h1>
         </div>
-        {/*//@ts-ignore*/}
         <LoginReduxForm onSubmit={onSubmit}/>
     </>
 }

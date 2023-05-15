@@ -8,13 +8,13 @@ const instance = axios.create({
     }
 
 })
-export type loginDataType = {
+export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
 }
 export const authApi  =  {
-    login(formData: loginDataType) {
+    login(formData: FormDataType) {
         return instance.post('auth/login', formData)
     },
     logout() {

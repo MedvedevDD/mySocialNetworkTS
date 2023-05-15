@@ -4,7 +4,7 @@ import {AppRootStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
 import {loginTC} from "../../redux/auth-reducer";
-import {loginDataType} from "../../api/api";
+import {FormDataType} from "../../api/api";
 
 
 type mapStateToPropsType = {
@@ -12,7 +12,7 @@ type mapStateToPropsType = {
     id: number | null
 }
 type mapDispatchToPropsType = {
-    loginTC: (formData: loginDataType) => void
+    loginTC: (formData: FormDataType) => void
 }
 type LoginContainerPropsType = mapStateToPropsType & mapDispatchToPropsType
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
